@@ -1,2 +1,2 @@
 mkdocs
--e git@github.com:IshitaTakeshi/mkdocs-bootstrap.git
+-e git://github.com/IshitaTakeshi/mkdocs-bootstrap.git#egg=mkdocs-bootstrap
