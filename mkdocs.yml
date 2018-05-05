@@ -1,3 +1,6 @@
 site_name: My Docs
 theme:
     name: bootstrap
+pages:
+- Home: 'index.md'
+- About Me: 'about_me.md'
