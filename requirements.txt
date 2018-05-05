@@ -1,2 +1,2 @@
 mkdocs
-mkdocs-bootstrap
+-e git@github.com:mkdocs/mkdocs-bootstrap.git
