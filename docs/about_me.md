@@ -63,7 +63,7 @@ I focused on the feature that PCANet can be trained very quickly but the represe
 
 ## 3. [SCW](https://github.com/IshitaTakeshi/SCW)
 SCW (Soft Confidence-Weighted Learning) is a light-weight online linear classifier. It was my first experience of reimplementing Machine Learning algorithms from a paper.  
-This is implemented in Julia as well: [repository](also://github.com/IshitaTakeshi/SoftConfidenceWeighted.jl).  
+This is implemented in Julia as well: [repository](https://github.com/IshitaTakeshi/SoftConfidenceWeighted.jl).  
 
 ## 4. [KanaKanjiConversion](https://github.com/IshitaTakeshi/KanaKanjiConversion)
 Kana-kanji conversion is a conversion method from kana characters to kanji characters, the most common way of inputting Japanese text from keyboards, which is realized by Machine Learning.  
