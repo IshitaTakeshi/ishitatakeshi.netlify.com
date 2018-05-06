@@ -1,4 +1,4 @@
-Ishita Takeshi
+Takeshi Ishita
 ==============
 
 # Education
