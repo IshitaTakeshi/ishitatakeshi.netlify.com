@@ -9,3 +9,5 @@ markdown_extensions:
 pages:
 - Home: 'index.md'
 - About Me: 'about_me.md'
+- Blog:
+    - カメラ座標系とワールド座標系の変換: 'camera_motion.md'
