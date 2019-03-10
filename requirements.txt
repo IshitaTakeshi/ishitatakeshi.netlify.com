@@ -1,3 +1,0 @@
-mkdocs
-python-markdown-math
--e git://github.com/IshitaTakeshi/mkdocs-bootstrap.git#egg=mkdocs-bootstrap
