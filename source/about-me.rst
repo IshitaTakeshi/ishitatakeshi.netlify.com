@@ -1,5 +1,6 @@
-Takeshi Ishita
-==============
+========
+About Me
+========
 
 Education
 =========
