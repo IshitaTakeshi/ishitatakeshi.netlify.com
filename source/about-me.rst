@@ -20,18 +20,16 @@ Work Experience
 `Usagee Inc. <http://usagee.co.jp/>`__
 --------------------------------------
 
--  Research and develop Machine Learinng & Computer Vision models
--  Provide effective solutions to customers by implementing models &
-   systems
+-  Research and development of Machine Learinng & Computer Vision models
+-  Provideing effective solutions to customers by implementing models & systems
 
-| May 2014 - present
+| May 2014 - 2017
 | Part-time job
 
 `Cookpad Inc. <https://info.cookpad.com/en>`__
 ----------------------------------------------
 
-Designed and implemented a machine learning model for ingredient
-recognition from food images.
+Design and implementation of machine learning models for ingredient recognition from food images.
 
 Patent
 ~~~~~~
@@ -40,6 +38,12 @@ The model I proposed is granted as a patent
 `#6306770 <https://www.j-platpat.inpit.go.jp/web/PU/JPB_6306770/062D067C8381CD29700292EC1ED536D9>`__.
 
 | Dec 2016 - Jul 2017
+| Part-time job
+
+`DeNA Co., Ltd. <https://dena.com/>`__
+--------------------------------------
+
+| April 2017 - present
 | Part-time job
 
 My works
