@@ -120,7 +120,7 @@
     :label: exponential-map
 
 
-| と表現することができる．すなわち， :eq:`differential-equation-so3` :eq:`exponential-map` より，回転行列 :math:`R(t)` は3次元の実ベクトルから生成することができる．
+| と表現することができる．すなわち， :eq:`differential-equation-so3` :eq:`exponential-map` より，回転行列 :math:`R(t)` は3次元の実ベクトル :math:`\mbf{\omega}` から生成することができる．
 | 　さて，:math:`R(t)` の指数写像による生成方法 :eq:`exponential-map` は行列の直交性 :eq:`orthogonality` のみから導かれたため， :math:`\det(R(t)) = 1` を示さなければ :math:`R(t)` が真に :math:`\SO(3)` の元であるということは言えない．しかし，指数写像 :eq:`exponential-map` によって得られた :math:`R(t)` が :math:`\det(R(t)) = 1` を充足することは簡単に示すことができる．正方行列 :math:`A` について :math:`\det(\exp(A))=\exp({\operatorname{tr} (A)})` が成り立つことから，
 
 .. math::
