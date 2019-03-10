@@ -6,12 +6,16 @@
 Welcome to the Ishita's homepage
 ================================
 
+.. math::
+    \def\so(#1){{\mathfrak{so}(#1)}}
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
 
    about-me
    camera-motion
+   so3
 
 Indices and tables
 ==================
