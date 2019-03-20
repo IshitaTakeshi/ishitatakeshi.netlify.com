@@ -38,7 +38,7 @@ Sparse Bundle Adjustment
 入力
 ~~~~
 
-　Tomasi-Kanade法は，各視点から観測されたランドマークの像の集合 :math:`X` を入力とする．
+　SBAは，各視点から観測されたランドマークの像の集合 :math:`X` を入力とする．
 
 .. math::
     X = \begin{bmatrix}
