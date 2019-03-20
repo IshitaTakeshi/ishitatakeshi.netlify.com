@@ -354,64 +354,64 @@ Sparse Bundle Adjustment
     :label: concrete-form-J
 
 | となる．
-| 　では :math:`A_{ij}` や :math:`B_{ij}` の具体的なかたちを求めてみよう．姿勢パラメータ :math:`\mbf{a} = \left[ \mbf{t}, \mbf{\omega} \right]` に関する微分 :math:`B=\frac{\partial Q(\mbf{a}, \mbf{b})}{\partial \mbf{b}}` は次のようになる．
+| 　では :math:`A_{ij}` や :math:`B_{ij}` の具体的なかたちを求めてみよう．姿勢パラメータ :math:`\mbf{a}_{j} = \left[ \mbf{t}_{j}, \mbf{\omega}_{j} \right]` に関する微分 :math:`A_{ij}=\frac{\partial Q(\mbf{a}_{j}, \mbf{b}_{i})}{\partial \mbf{a}_{j}}` は次のようになる．
 
 
 .. math::
     \begin{align}
-    \frac{\partial \hat{\mbf{x}}}{\partial \mbf{t}}
+    \frac{\partial \hat{\mbf{x}}_{ij}}{\partial \mbf{t}_{j}}
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
-       \frac{\partial (R(\mbf{\omega})\mbf{b} + \mbf{v})}{\partial \mbf{v}}
-       \bigg\rvert_{\mbf{v}=\mbf{t}} \\
+       \frac{\partial (R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{v})}{\partial \mbf{v}}
+       \bigg\rvert_{\mbf{v}=\mbf{t}_j} \\
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
     \end{align}
 
 
 .. math::
     \begin{align}
-    \frac{\partial \hat{\mbf{x}}}{\partial \mbf{\omega}}
+    \frac{\partial \hat{\mbf{x}}_{ij}}{\partial \mbf{\omega}_{j}}
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
-       \frac{\partial (R(\mbf{v})\mbf{b} + \mbf{t})}{\partial \mbf{v}}
-       \bigg\rvert_{\mbf{v}=\mbf{\omega}} \\
+       \frac{\partial (R(\mbf{v})\mbf{b}_{i} + \mbf{t}_{j})}{\partial \mbf{v}}
+       \bigg\rvert_{\mbf{v}=\mbf{\omega}_{j}} \\
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
-       \frac{\partial (R(\mbf{v})\mbf{b})}{\partial \mbf{v}}
-       \bigg\rvert_{\mbf{v}=\mbf{\omega}}
+       \frac{\partial (R(\mbf{v})\mbf{b}_{i})}{\partial \mbf{v}}
+       \bigg\rvert_{\mbf{v}=\mbf{\omega}_{j}}
     \end{align}
 
 
-　ここで， :math:`\frac{\partial (R(\mbf{v})\mbf{b})}{\partial \mbf{v}}` はGallegoら [#Gallego_et_al_2015]_ による計算結果を用いることができる．
+　ここで， :math:`\frac{\partial (R(\mbf{v})\mbf{b}_{i})}{\partial \mbf{v}}` はGallegoら [#Gallego_et_al_2015]_ による計算結果を用いることができる．
 
 .. math::
-   \frac{\partial (R(\mbf{v})\mbf{b})}{\partial \mbf{v}}
-   = -R(\mbf{v}) \left[ \mbf{b} \right]_{\times}
+   \frac{\partial (R(\mbf{v})\mbf{b}_{i})}{\partial \mbf{v}}
+   = -R(\mbf{v}) \left[ \mbf{b}_{i} \right]_{\times}
      \frac{
         \mbf{v}\mbf{v}^{\top} +
         (R(\mbf{v})^{\top} - I) \left[ \mbf{v} \right]_{\times}
      }{||\mbf{v}||^{2}}
 
 
-　3次元点の座標 :math:`\mbf{b}` に関する微分 :math:`B=\frac{\partial Q(\mbf{a}, \mbf{b})}{\partial \mbf{b}}` は次のようになる．
+　3次元点の座標 :math:`\mbf{b}_{i}` に関する微分 :math:`B_{ij}=\frac{\partial Q(\mbf{a}_{j}, \mbf{b}_{i})}{\partial \mbf{b}_{i}}` は次のようになる．
 
 .. math::
     \begin{align}
-    \frac{\partial \hat{\mbf{x}}}{\partial \mbf{b}}
+    \frac{\partial \hat{\mbf{x}}_{ij}}{\partial \mbf{b}_{i}}
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
-       \frac{\partial (R(\mbf{\omega})\mbf{v} + \mbf{t})}{\partial \mbf{v}}
-       \bigg\rvert_{\mbf{v}=\mbf{b}} \\
+       \frac{\partial (R(\mbf{\omega}_{j})\mbf{v} + \mbf{t}_{j})}{\partial \mbf{v}}
+       \bigg\rvert_{\mbf{v}=\mbf{b}_{i}} \\
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
-       \bigg\rvert_{\mbf{p}=R\mbf{b} + \mbf{t}}
+       \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
        \cdot
-       R(\mbf{\omega})
+       R(\mbf{\omega}_{j})
     \end{align}
 
 
