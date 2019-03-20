@@ -16,6 +16,7 @@ Welcome to the Ishita's homepage
    about-me
    camera-motion
    so3
+   sba
 
 Indices and tables
 ==================
