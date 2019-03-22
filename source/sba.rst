@@ -367,7 +367,6 @@ Sparse Bundle Adjustment
        \bigg\rvert_{\mbf{v}=\mbf{t}_j} \\
     &= \frac{\partial \pi(\mbf{p})}{\partial \mbf{p}}
        \bigg\rvert_{\mbf{p}=R(\mbf{\omega}_{j})\mbf{b}_{i} + \mbf{t}_{j}}
-       \cdot
     \end{align}
 
 
