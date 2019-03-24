@@ -19,6 +19,45 @@ EMアルゴリズム
 
 EMアルゴリズムは潜在変数を導入することで
 
+Let :math:`p` be the dimension of :math:`\mathbf{x}`.
+
+.. math::
+    \begin{align}
+    p(\mathbf{x} \mid u)
+    &= \frac{1}{(2\pi)^{\frac{p}{2}} {|\frac{\Sigma}{u}|}^{\frac{1}{2}}}
+       \exp(-\frac{1}{2} (\mathbf{x}-\mathbf{\mu})^{\top} (\frac{\Sigma}{u})^{-1} (\mathbf{x}-\mathbf{\mu})) \\
+    &= \frac{1}{(2\pi)^{\frac{p}{2}} (\frac{1}{u})^{\frac{p}{2}} {|\Sigma|}^{\frac{1}{2}}}
+       \exp(-\frac{u}{2} (\mathbf{x}-\mathbf{\mu})^{\top} \Sigma^{-1} (\mathbf{x}-\mathbf{\mu})) \\
+    \end{align}
+
+because :math:`|k \Sigma| = k^{p} |\Sigma|` for an arbitrary real scalar value :math:`k`.
+
+.. math::
+    p(u) = \frac{(\frac{\nu}{2})^{\frac{\nu}{2}}}{\Gamma(\frac{\nu}{2})} u^{\frac{\nu}{2}-1} \exp(-\frac{\nu}{2} u)
+
+.. math::
+    \begin{align}
+        \mathbf{x} &\sim \mathrm{Student}(\mathbf{\mu}, \Sigma, \nu) \\
+        \mathbf{x} \mid u &\sim \mathrm{Normal}(\mathbf{\mu}, \frac{\Sigma}{u}) \\
+        u &\sim \mathrm{Gamma}(\frac{\nu}{2}, \frac{\nu}{2})
+    \end{align}
+
+.. math::
+    p(\mathbf{x}, u; \mathbf{\theta})
+    &= \mathrm{Normal}(\mathbf{\mu}, \frac{\Sigma}{u}) \, \mathrm{Gamma}(\frac{\nu}{2}, \frac{\nu}{2}) \\
+
+.. math::
+    p(\mathbf{x}; \mathbf{\theta}) = \int_{u} p(\mathbf{x}, u; \mathbf{\theta}) du
+
+:math:`\int_{u} \, \cdot \, du` は :math:`u` の定義域について積分を行うという意味
+
+.. math::
+    p(u \mid \mathbf{x}; \mathbf{\theta}) = \frac{p(u, \mathbf{x}_{i}; \mathbf{\theta})}{p(\mathbf{x}_{i}; \mathbf{\theta})}
+    = \frac{
+    }{
+    }
+
+
 .. math::
     \def\Expectation{{\operatorname{E}}}
 
@@ -26,7 +65,7 @@ EMアルゴリズムは潜在変数を導入することで
     \begin{align}
         Q(\theta^{(t)}, \theta^{(t-1)})
         &=\sum_{i=1}^{N} \int_{u} p(u \mid \mathbf{x}_{i}; \mathbf{\theta}^{(t-1)}) \log p(\mathbf{x}_{i}, u; \theta^{(t)}) du \\
-        &=\sum_{i=1}^{N} \int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2})
+        &=\sum_{i=1}^{N} \int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2})
         \left[
             C - \frac{1}{2}\log(|\Sigma^{(t)}|) + (\frac{\nu + p}{2} - 1)\log(u)
             - \frac{u}{2}(\nu + s_{i}^{(t)})
@@ -42,15 +81,15 @@ EMアルゴリズムは潜在変数を導入することで
 .. math::
     \begin{alignat}{3}
         Q(\theta^{(t)}, \theta^{(t-1)})
-        &=\sum_{i=1}^{N}\Big[&(C - \frac{1}{2}\log(|\Sigma^{(t)}|)) &\int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \,            du \\
-        &                    &+ (\frac{\nu + p}{2} - 1)             &\int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, \log(u) \, du \\
-        &                    &- \frac{1}{2}(\nu + s_{i}^{(t)})      &\int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, u       \, du \Big] \\
+        &=\sum_{i=1}^{N}\Big[&(C - \frac{1}{2}\log(|\Sigma^{(t)}|)) &\int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \,            du \\
+        &                    &+ (\frac{\nu + p}{2} - 1)             &\int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, \log(u) \, du \\
+        &                    &- \frac{1}{2}(\nu + s_{i}^{(t)})      &\int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, u       \, du \Big] \\
     \end{alignat}
 
 .. math::
-    1                                                           &= \int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \,            du \\
-    \Expectation[\log(u) \mid \mathbf{x}_{i};\, \theta^{(t-1)}] &= \int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, \log(u) \, du \\
-    \Expectation[u       \mid \mathbf{x}_{i};\, \theta^{(t-1)}] &= \int_{u} \Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, u       \, du \\
+    1                                                           &= \int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \,            du \\
+    \Expectation[\log(u) \mid \mathbf{x}_{i};\, \theta^{(t-1)}] &= \int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, \log(u) \, du \\
+    \Expectation[u       \mid \mathbf{x}_{i};\, \theta^{(t-1)}] &= \int_{u} \mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2}) \, u       \, du \\
 
 .. math::
     \begin{alignat}{3}
@@ -101,9 +140,9 @@ EMアルゴリズムは潜在変数を導入することで
            (\mathbf{x}_{i} - \mathbf{\mu}^{(t)}) (\mathbf{x}_{i} - \mathbf{\mu}^{(t)})^{\top}
     \end{align}
 
-:math:`u` given :math:`X` はガンマ分布 :math:`\Gamma(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2})` に従う．
+:math:`u` given :math:`X` はガンマ分布 :math:`\mathrm{Gamma}(\frac{\nu + p}{2}, \frac{\nu + s_{i}^{(t-1)}}{2})` に従う．
 
-:math:`\Gamma(\alpha, \beta)` の期待値は :math:`\alpha / \beta` なので，
+:math:`\mathrm{Gamma}(\alpha, \beta)` の期待値は :math:`\alpha / \beta` なので，
 
 .. math::
     \Expectation[u \mid \mathbf{x}_{i};\, \theta^{(t-1)}] = \frac{\nu + p}{\nu + s_{i}^{(t-1)}}
