@@ -17,10 +17,3 @@ Welcome to the Ishita's homepage
    camera-motion
    so3
    sba
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
