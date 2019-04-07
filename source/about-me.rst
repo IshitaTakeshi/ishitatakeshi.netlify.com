@@ -5,9 +5,6 @@ About Me
 Education
 =========
 
-Bachelor student of National Institute of Technology, Tokyo College,
-Advanced Course.
-
 | National Institute of Technology, Tokyo College
 | April 2012 - March 2017
 
