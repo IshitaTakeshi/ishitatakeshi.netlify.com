@@ -40,8 +40,8 @@
 .. math::
     \skew{\mbf{\omega}} = \begin{bmatrix}
         0 & -\omega_{3} & \omega_{2} \\
-        \omega_{1} & 0 & -\omega_{1} \\
-        -\omega_{2} & \omega_{3} & 0
+        \omega_{3} & 0 & -\omega_{1} \\
+        -\omega_{2} & \omega_{1} & 0
     \end{bmatrix}
 
 　:math:`\so(3)` の元を指数写像で射影すると回転行列が得られる．
