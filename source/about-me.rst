@@ -43,6 +43,14 @@ The model I proposed is granted as a patent
 | April 2017 - present
 | Part-time job
 
+`Mitou Program <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
+---------------------------------------------------------------------------
+
+Development of a Visual SLAM framework
+
+| April 2019 - present
+
+
 My works
 ========
 
