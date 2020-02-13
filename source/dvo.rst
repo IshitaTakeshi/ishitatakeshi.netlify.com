@@ -9,8 +9,8 @@ DVO
 
 　Dense Visual Odometry(DVO)とはミュンヘン工科大学によって提供されている，direct methodに基づいたVisual Odometryのパッケージである．DVOはSteinbrückerらの手法 [#Steinbrucker_et_al_2011]_ とKerlらの手法 [#Kerl_et_al_2013]_ から成り立っている．いずれの論文も，2 つの視点で観測されたカメラの輝度情報と深度情報を用いて，視点間の移動を推定する手法について解説している．Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_ では，測光誤差を正規分布でモデル化し，最尤推定によってカメラ姿勢の変化を求めている．一方で，Kerlらの手法 [#Kerl_et_al_2013]_ では，測光誤差をt分布でモデル化し，MAP 推定によってカメラ姿勢の変化を求めている．
 
-Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_ の解説
--------------------------------------------------------
+Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
+------------------------------------------------
 
 問題設定
 ~~~~~~~~
@@ -303,8 +303,8 @@ warping関数を近似する．
     \end{align}
 
 
-Kerlらの手法 [#Kerl_et_al_2013]_ の解説
----------------------------------------
+Kerlらの手法 [#Kerl_et_al_2013]_
+--------------------------------
 
 　Kerlらの手法 [#Kerl_et_al_2013]_ は，Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_ をつぎの点で改良した手法である．
 
