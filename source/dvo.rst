@@ -246,7 +246,7 @@ warping関数を近似する．
 .. math::
     E(\pose) \approx \sum_{i} \left[ C_{i} \pose - y_{i} \right]^2
 
-| という最小二乗法の形で記述できる．
+| という最小二乗法の形で記述できる．これを解けば :eq:`error-function-dvo` を近似的に最小化する姿勢変化 :math:`\pose` が得られる．
 | 　以降は :math:`C_{i}` の各項の具体的な形を計算していく． :math:`\frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}` については先述のとおりであるため，それ以外の項を計算する．
 
 
