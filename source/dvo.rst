@@ -1,6 +1,11 @@
 DVO
 ===
 
+.. raw:: html
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/a46r5MIqL44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
 .. math::
     \def\SE(#1){{\mathrm{SE}(#1)}}
     \def\pose{{\mathbf{\xi}}}
