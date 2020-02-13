@@ -171,7 +171,7 @@ warping関数を近似する．
     \cdot \frac{\partial G(t_{0})}{\partial t}
     \end{align}
 
-である．:math:`\frac{\partial G(t)}{\partial t} = \skew{\mathbf{\xi}}G(t)` を用いると，
+である．:math:`\frac{\partial G(t)}{\partial t} = \skew{\mathbf{\xi}}G(t)` (参考: :doc:`so3`) を用いると，
 
 .. math::
     \begin{align}
