@@ -15,11 +15,6 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 問題設定
 ~~~~~~~~
 
-.. math::
-    \frac{\partial G(t)}{\partial t} = \skew{\mathbf{\xi}}G(t)
-    :label: differential-equation-se3
-
-
 | 　Visual Odometry は，カメラから連続的に得られる輝度情報を用いて，カメラの姿勢変化を逐次的に推定する問題である．カメラの姿勢変化を :math:`\pose \in \mathbb{R}^{6} \; \textrm{s.t.} \; \skew{\pose} \in \se(3)` ，時刻 :math:`t` における画像を :math:`I_{t}` ， :math:`I_{t}` の座標 :math:`\mathbf{x}_{i},(i=1,\dots,N)` における輝度を :math:`I(\mathbf{x}_{i}, t)` とする． :math:`I(\mathbf{x}_{i}, t_{0})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
 
 .. math::
@@ -160,7 +155,7 @@ warping関数を近似する．
     \cdot \frac{\partial G(t_{0})}{\partial t}
     \end{align}
 
-である． :eq:`differential-equation-se3` を用いると，
+である．:math:`\frac{\partial G(t)}{\partial t} = \skew{\mathbf{\xi}}G(t)` を用いると，
 
 .. math::
     \begin{align}
