@@ -21,7 +21,7 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 問題設定
 ~~~~~~~~
 
-| 　Visual Odometry は，カメラから連続的に得られる輝度情報を用いて，カメラの姿勢変化を逐次的に推定する問題である．カメラの姿勢変化を :math:`\mathbf{\xi} \in \mathbb{R}^{6} \; \textrm{s.t.} \;\skew{\mathbf{\xi}} \in \se(3)` ，時刻 :math:`t` における画像を :math:`I_{t}` ， :math:`I_{t}` の座標 :math:`\mathbf{x}_{i},(i=1,\dots,N)` における輝度を :math:`I(\mathbf{x}_{i}, t)` で表現する．ここで :math:`\skew{\cdot}` は次で定義される演算子である．
+| 　Visual Odometry は，カメラから連続的に得られる輝度情報を用いて，カメラの姿勢変化を逐次的に推定する問題である．カメラの姿勢変化を :math:`\mathbf{\xi} \in \mathbb{R}^{6} \; \textrm{s.t.} \;\skew{\mathbf{\xi}} \in \se(3)` ，時刻 :math:`t` における画像を :math:`I_{t}` ， :math:`I_{t}` の座標 :math:`\mathbf{x}_{i},(i=1,\dots,N)` における輝度を :math:`I_{t}(\mathbf{x}_{i})` で表現する．ここで :math:`\skew{\cdot}` は次で定義される演算子である．
 
 .. math::
     \skew{\mathbf{\xi}} &= \begin{bmatrix}
@@ -31,10 +31,10 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
         0 &      0 &      0 &     0 \\
    \end{bmatrix} \in \se(3),\;\mathbf{\xi} \in \mathbb{R}^{6}
 
-:math:`I(\mathbf{x}_{i}, t_{0})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
+:math:`I_{t_{0}}(\mathbf{x}_{i})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
 
 .. math::
-    L(\xi) = p(I_{t_{0}}|\pose) = \prod_{i} p(I(\mathbf{x}_{i}, t_{0})|\pose)
+    L(\xi) = p(I_{t_{0}}|\pose) = \prod_{i} p(I_{t_{0}}(\mathbf{x}_{i})|\pose)
 
 | を最大化する問題とみなすことができる．
 | 　問題をより詳細に記述するため，warping関数を定義する．:math:`\mathbf{w}_{\pose}(\mathbf{x}, t)` を，ピクセル :math:`\mathbf{x}` を時刻 :math:`t_{0}` における画像平面から時刻 :math:`t` における画像平面に写す関数
@@ -44,13 +44,13 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
     = \mathbf{\pi}(g(G(t), \mathbf{\pi}^{-1}(\mathbf{x}))) \\
 
 | とする． :math:`G(t)\in \SE(3)` は時刻 :math:`t` におけるカメラ姿勢を表すユークリッド群の元 :math:`G(t) = \exp((t-t_{0})\skew{\pose})G(t_{0})` であり， :math:`g(G, \mathbf{p})` は3次元点 :math:`\mathbf{p} \in \mathbb{R}^{3}` の変換 :math:`g(G, \mathbf{p}) = R\mathbf{p} + \mathbf{t}` を表す関数である．また， :math:`\mathbf{\pi}^{-1}(\mathbf{x})` は投影モデルの逆写像を表す．
-| 　Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_ では :math:`p(I(\mathbf{x}_{i}, t_{0})|\pose)` を :math:`N(I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1}), \sigma^{2})`  でモデル化し，最尤推定によって姿勢変化 :math:`\pose` を求める．結果として姿勢 :math:`\pose` をパラメータとした二乗誤差関数が得られる．すなわち，
+| 　Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_ では :math:`p(I_{t_{0}}(\mathbf{x}_{i})|\pose)` を :math:`N(I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})), \sigma^{2})`  でモデル化し，最尤推定によって姿勢変化 :math:`\pose` を求める．結果として姿勢 :math:`\pose` をパラメータとした二乗誤差関数が得られる．すなわち，
 
 .. math::
-    p(I(\mathbf{x}_i, t_{0})|\pose)
+    p(I_{t_{0}}(\mathbf{x}_i)|\pose)
     = \frac{1}{\sqrt{2\pi}\sigma}\exp(
         -\frac{
-            [I(\mathbf{x}_{i}, t_{0})-I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})]^2
+            [I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2
         }{\sigma^2}
     )
 
@@ -60,8 +60,8 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
     \begin{align}
     \hat{\pose}
     &= \underset{\pose}{\arg \max} \log p(I_{t_{0}}|\pose)  \\
-    &= \underset{\pose}{\arg \max} \log \prod_{i} p(I(\mathbf{x}_i, t_{0})|\pose) \\
-    &= \underset{\pose}{\arg \max} \sum_{i} \log p(I(\mathbf{x}_i, t_{0})|\pose)
+    &= \underset{\pose}{\arg \max} \log \prod_{i} p(I_{t_{0}}(\mathbf{x}_i)|\pose) \\
+    &= \underset{\pose}{\arg \max} \sum_{i} \log p(I_{t_{0}}(\mathbf{x}_i)|\pose)
     \end{align}
 
 確率密度関数を代入すると，
@@ -71,20 +71,20 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
     \hat{\pose}
     &= \underset{\pose}{\arg \max} \sum_{i} \log p(I_{t_{0}}(\mathbf{x}_i)|\pose) \\
     &= \underset{\pose}{\arg \max} \sum_{i} \log [\frac{1}{\sqrt{2\pi}\sigma}
-        \exp(-\frac{[I(\mathbf{x}_{i}, t_{0})-I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})]^2}{\sigma^2})
+        \exp(-\frac{[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2}{\sigma^2})
     ]
     \end{align}
 
 定数項を省くと
 
 .. math::
-    \hat{\pose} = \underset{\pose}{\arg \min}\; \sum_{i}[I(\mathbf{x}_{i}, t_{0})-I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})]^2
+    \hat{\pose} = \underset{\pose}{\arg \min}\; \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2
 
 となり，二乗誤差関数
 
 .. math::
     E(\pose)
-    = \sum_{i}[I(\mathbf{x}_{i}, t_{0})-I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})]^2
+    = \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2
     :label: error-function-dvo
 
 
@@ -98,17 +98,17 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 | 　まず画像を空間方向に一次近似する．
 
 .. math::
-    I(\mathbf{x}_{i} + \Delta\mathbf{x}, t_{1})
-    \approx I(\mathbf{x}_{i}, t_{1}) +
-    \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+    I_{t_{1}}(\mathbf{x}_{i} + \Delta\mathbf{x})
+    \approx I_{t_{1}}(\mathbf{x}_{i}) +
+    \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
     \Delta \mathbf{x}
 
 :math:`\mathbf{x}_{i} + \Delta\mathbf{x} = \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})` とおくと次のようになる．
 
 .. math::
-    I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})
-    \approx I(\mathbf{x}_{i}, t_{1}) +
-    \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+    I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))
+    \approx I_{t_{1}}(\mathbf{x}_{i}) +
+    \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
     (\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})-\mathbf{x}_{i})
     :label: imageapprox
 
@@ -129,18 +129,18 @@ warping関数を近似する．
 
 
 .. math::
-    I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})
-    \approx I(\mathbf{x}_{i}, t_{1}) +
-    \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
-    \frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t} (t_{1} - t_{0}).
+    I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))
+    \approx I_{t_{1}}(\mathbf{x}_{i}) +
+    \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
+    \frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t} (t_{1} - t_{0})
 
 
 :math:`t_{1} - t_{0}` はフレームの撮影間隔(フレームレートの逆数)である．今回は :math:`t_{1} - t_{0} = 1` とおく．すなわち，フレームの撮影間隔を1単位時間とみなす．
 
 .. math::
-    I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})
-    \approx I(\mathbf{x}_{i}, t_{1}) +
-    \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+    I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))
+    \approx I_{t_{1}}(\mathbf{x}_{i}) +
+    \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
     \frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t}
 
 この結果を用いて誤差関数を書き換えると次のようになる．
@@ -148,17 +148,17 @@ warping関数を近似する．
 .. math::
     \begin{align}
     E(\pose)
-        &= \sum_{i}[I(\mathbf{x}_{i}, t_{0})-I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})]^2 \\
+        &= \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2 \\
         &\approx \sum_{i}[
-            I(\mathbf{x}_{i}, t_{1})-I(\mathbf{x}_{i}, t_{0}) +
-            \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+            I_{t_{1}}(\mathbf{x}_{i})-I_{t_{0}}(\mathbf{x}_{i}) +
+            \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
             \frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t}
         ]^2
     \end{align}
     :label: modified-error-function-dvo
 
 
-| 　さて， :math:`I(\mathbf{x}_{i}, t_{1})-I(\mathbf{x}_{i}, t_{0})` は画像間の差分を意味しており， :math:`\frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}` は一次の勾配を表しているため，これらは容易に実装することができる．しかし :math:`\frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t}` はその中身が具体的なかたちで書かれていないため，さらに詳しく表現する必要がある．
+| 　さて， :math:`I_{t_{1}}(\mathbf{x}_{i})-I_{t_{0}}(\mathbf{x}_{i})` は画像間の差分を意味しており， :math:`\frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}` は一次の勾配を表しているため，これらは容易に実装することができる．しかし :math:`\frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial t}` はその中身が具体的なかたちで書かれていないため，さらに詳しく表現する必要がある．
 | 　warping関数の微分は，chain ruleより
 
 .. math::
@@ -199,12 +199,12 @@ warping関数を近似する．
     \begin{align}
     E(\pose)
     &= \sum_{i}\left[
-        I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1})-I(\mathbf{x}_{i}, t_{0})
+        I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))-I_{t_{0}}(\mathbf{x}_{i})
     \right]^2 \\
     &\approx \sum_{i}\left[
-        I(\mathbf{x}_{i}, t_{1}) -
-        I(\mathbf{x}_{i}, t_{0}) +
-        \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+        I_{t_{1}}(\mathbf{x}_{i}) -
+        I_{t_{0}}(\mathbf{x}_{i}) +
+        \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
         \frac{\partial \mathbf{\pi}(g(G(t_{0}), \mathbf{p}_{i}))}{\partial g}
         \cdot \frac{\partial g(G(t_{0}), \mathbf{p}_{i})}{\partial \mathrm{stack}(G)}
         \cdot J_{G} \cdot \pose
@@ -216,12 +216,12 @@ warping関数を近似する．
 .. math::
     \begin{align}
     C_{i}
-    &=  \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+    &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
         \cdot \frac{\partial \mathbf{\pi}(g(G(t_{0}, \mathbf{p})))}{\partial g}
         \cdot \frac{\partial g(G(t_{0}, \mathbf{p}))}{\partial \mathrm{stack}(G)}
         \cdot J_{G} \cdot \pose \\
     y_{i}
-    &= -\left[ I(\mathbf{x}_{i}, t_{1}) - I(\mathbf{x}_{i}, t_{0}) \right]
+    &= -\left[ I_{t_{1}}(\mathbf{x}_{i}) - I_{t_{0}}(\mathbf{x}_{i}) \right]
     \end{align}
 
 とおけば，誤差関数 :math:`E(\pose)` は
@@ -230,7 +230,7 @@ warping関数を近似する．
     E(\pose) \approx \sum_{i} \left[ C_{i} \pose - y_{i} \right]^2
 
 | という最小二乗法の形で記述できる．
-| 　以降は :math:`C_{i}` の各項の具体的な形を計算していく． :math:`\frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}` については先述のとおりであるため，それ以外の項を計算する．
+| 　以降は :math:`C_{i}` の各項の具体的な形を計算していく． :math:`\frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}` については先述のとおりであるため，それ以外の項を計算する．
 
 
 .. math::
@@ -300,11 +300,11 @@ warping関数を近似する．
 .. math::
     \begin{align}
     C_{i}
-    &=  \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}} \cdot
+    &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}} \cdot
         \frac{\partial \mathbf{\pi}(\mathbf{p})}{\partial \mathbf{p}} \cdot
         \frac{\partial g(G(t_{1}), \mathbf{p})}{\partial \mathrm{stack}(G)} \cdot
         J_{G} \\
-    &= \frac{\partial I(\mathbf{x}_{i}, t_{1})}{\partial \mathbf{x}}
+    &= \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
        \begin{bmatrix}
             \frac{f_{x}}{z} & 0 & -\frac{f_{x}x}{z^2} &
             -\frac{f_{x}x'y'}{z'^2} & f_{x}(1+\frac{x'^2}{z'^2}) & -\frac{f_{x}y'}{z'} \\
@@ -339,9 +339,9 @@ MAP推定による記述
     &= \underset{\pose}{\arg \max}\; p(\pose|I_{t_{1}})\\
     &= \underset{\pose}{\arg \max}\; p(I_{t_{1}}|\pose)p(\pose) \\
     &= \underset{\pose}{\arg \max}\;
-        \prod_{i} p(I(\mathbf{x}_{i}, t_{1})|\pose)p(\pose) \\
+        \prod_{i} p(I_{t_{1}}(\mathbf{x}_{i})|\pose)p(\pose) \\
     &= \underset{\pose}{\arg \max}\;
-        [\sum_{i}\log p(I(\mathbf{x}_{i}, t_{1})|\pose) + \log p(\pose)]
+        [\sum_{i}\log p(I_{t_{1}}(\mathbf{x}_{i})|\pose) + \log p(\pose)]
     \end{align}
 
 を解いている．事前分布 :math:`p(\pose)` は自由に設定できるため，このうち対数尤度関数 :math:`\log p(r_{i}|\pose)` のみに着目し式を変形していくと
@@ -349,7 +349,7 @@ MAP推定による記述
 .. math::
     \begin{align}
     \pose_{\text{MAP}} &= \underset{\xi}{\arg \min} \sum_{i} w(r_{i})(r_{i}(\pose))^2 \\
-    r_{i} &= I(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}), t_{1}) - I(\mathbf{x}_{i}, t_{1})
+    r_{i} &= I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})) - I_{t_{1}}(\mathbf{x}_{i})
     \end{align}
 
 という式が得られる．これはピクセルごとの誤差 :math:`r_{i}(\pose)` を :math:`w(r_{i})` で重み付けし総和をとったものだと解釈することができる． :math:`w(r_{i})` の形は分布の設定方法によって変わってくるが，測光誤差 :math:`r_{i}` がt分布に従うという仮定のもとでは
