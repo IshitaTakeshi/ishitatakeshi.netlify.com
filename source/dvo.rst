@@ -16,7 +16,17 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 問題設定
 ~~~~~~~~
 
-| 　Visual Odometry は，カメラから連続的に得られる輝度情報を用いて，カメラの姿勢変化を逐次的に推定する問題である．カメラの姿勢変化を :math:`\pose \in \mathbb{R}^{6} \; \textrm{s.t.} \; \skew{\pose} \in \se(3)` ，時刻 :math:`t` における画像を :math:`I_{t}` ， :math:`I_{t}` の座標 :math:`\mathbf{x}_{i},(i=1,\dots,N)` における輝度を :math:`I(\mathbf{x}_{i}, t)` とする． :math:`I(\mathbf{x}_{i}, t_{0})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
+| 　Visual Odometry は，カメラから連続的に得られる輝度情報を用いて，カメラの姿勢変化を逐次的に推定する問題である．カメラの姿勢変化を :math:`\mathbf{\xi} \in \mathbb{R}^{6} \; \textrm{s.t.} \;\skew{\mathbf{\xi}} \in \se(3)` ，時刻 :math:`t` における画像を :math:`I_{t}` ， :math:`I_{t}` の座標 :math:`\mathbf{x}_{i},(i=1,\dots,N)` における輝度を :math:`I(\mathbf{x}_{i}, t)` で表現する．ここで :math:`\skew{\cdot}` は次で定義される演算子である．
+
+.. math::
+    \skew{\mathbf{\xi}} &= \begin{bmatrix}
+        0 & -\xi_{6} & \xi_{5} & \xi_{1} \\
+        \xi_{6} & 0 & -\xi_{4} & \xi_{2} \\
+        -\xi_{5} & \xi_{4} & 0 & \xi_{3} \\
+        0 &      0 &      0 &     0 \\
+   \end{bmatrix} \in \se(3),\;\mathbf{\xi} \in \mathbb{R}^{6}
+
+:math:`I(\mathbf{x}_{i}, t_{0})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
 
 .. math::
     L(\xi) = p(I_{t_{0}}|\pose) = \prod_{i} p(I(\mathbf{x}_{i}, t_{0})|\pose)
