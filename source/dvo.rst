@@ -181,7 +181,7 @@ warping関数を近似する．
     &= \frac{\partial \mathbf{\pi}(g(G(t_{0}), \mathbf{p}_{i}))}{\partial g}
     \cdot \frac{\partial g(G(t_{0}), \mathbf{p}_{i})}{\partial G}
     \cdot \skew{\pose} \cdot G(t_{0})
-    \end{align}.
+    \end{align}
 
 ここで， :math:`\mathrm{stack}(\skew{\pose_{k}} \cdot G(t_{0})) = J_{G} \cdot \pose` を満たすような :math:`J_{G}` が存在する．これを用いると，
 
@@ -190,7 +190,7 @@ warping関数を近似する．
     \frac{\partial \mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{0})}{\partial \pose}
     &= \frac{\partial \mathbf{\pi}(g(G(t_{0}), \mathbf{p}_{i}))}{\partial g}
     \cdot \frac{\partial g(G(t_{0}), \mathbf{p}_{i})}{\partial \mathrm{stack}(G)}
-    \cdot J_{G} \cdot \pose.
+    \cdot J_{G} \cdot \pose
     \end{align}
 
 もとの誤差関数 :eq:`modified-error-function-dvo` に代入すると
@@ -293,7 +293,7 @@ warping関数を近似する．
         1 & 0 & 0 & 0 & z' & -y' \\
         0 & 1 & 0 & -z' & 0 & x' \\
         0 & 0 & 1 & y' & -x' & 0 \\
-    \end{bmatrix}.
+    \end{bmatrix}
 
 　以上より :math:`C_{i}` が計算できる．
 
