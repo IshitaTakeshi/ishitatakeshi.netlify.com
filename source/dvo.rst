@@ -276,21 +276,7 @@ warping関数を近似する．
         0 & 0 & 1 & t_{3}   & -t_{1}  & 0      \\
     \end{bmatrix}
 
-となる．  :math:`J_{G}` は確かに
-
-.. math::
-    \begin{align}
-    J_{G} \cdot \pose
-    &= \mathrm{stack}(\skew{\pose} \cdot G) \\
-    &= \begin{bmatrix}
-        r_{11} & r_{21} & r_{33} &
-        r_{12} & r_{22} & r_{32} &
-        r_{13} & r_{23} & r_{33} &
-        t_{1} & t_{2} & t_{3}
-    \end{bmatrix}^{\top}
-    \end{align}
-
-| を満たしている．
+| となる．  :math:`J_{G}` は確かに :math:`J_{G} \cdot \pose = \mathrm{stack}(\skew{\pose} \cdot G)` を満たしている．
 | 　:math:`\partial g / \partial \mathrm{stack}(G)` は， :math:`G(t)` によって変換された点 :math:`\mathbf{p}' = g(G(t), \mathbf{p})` を :math:`G(t)` の各成分で微分したものなので，
 
 .. math::
