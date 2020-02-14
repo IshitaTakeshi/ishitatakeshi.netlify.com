@@ -31,7 +31,7 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
         0 &      0 &      0 &     0 \\
    \end{bmatrix} \in \se(3),\;\mathbf{\xi} \in \mathbb{R}^{6}
 
-:math:`I_{t_{0}}(\mathbf{x}_{i})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は
+:math:`I_{t_{0}}(\mathbf{x}_{i})` が各ピクセル :math:`\mathbf{x}_{i}` についてi.i.dだと仮定すると，2視点間の姿勢変化 :math:`\pose` を画像変化から求める問題は，尤度
 
 .. math::
     L(\xi) = p(I_{t_{0}}|\pose) = \prod_{i} p(I_{t_{0}}(\mathbf{x}_{i})|\pose)
