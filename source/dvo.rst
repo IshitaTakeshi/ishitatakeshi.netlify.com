@@ -183,7 +183,7 @@ warping関数を近似する．
     \cdot \skew{\pose} \cdot G(t_{0})
     \end{align}
 
-:math:`\frac{\partial g(G(t_{0}), \mathbf{p}_{i})}{\partial G}` は行列 :math:`G` による微分であり，コードで実装すると3次元配列になってしまうためあまり扱いたくない．
+:math:`\frac{\partial g(G(t_{0}), \mathbf{p}_{i})}{\partial G}` は行列 :math:`G` による微分であり，コードで実装すると3次元配列になってしまう．
 これを回避するため，以下で定義される :math:`\mathrm{stack}(G)` を導入する．
 
     :math:`G \in \SE(3)` を
@@ -246,7 +246,7 @@ warping関数を近似する．
 .. math::
     E(\pose) \approx \sum_{i} \left[ C_{i} \pose - y_{i} \right]^2
 
-| という最小二乗法の形で記述できる．これを解けば :eq:`error-function-dvo` を近似的に最小化する姿勢変化 :math:`\pose` が得られる．
+| という最小二乗法の形で記述でき，これを解けば :eq:`error-function-dvo` を近似的に最小化する姿勢変化 :math:`\pose` が得られる．
 | 　以降は :math:`C_{i}` の各項の具体的な形を計算していく． :math:`\frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}` については先述のとおりであるため，それ以外の項を計算する．
 
 
