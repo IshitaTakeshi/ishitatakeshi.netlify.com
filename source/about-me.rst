@@ -59,6 +59,9 @@ My works are available on `GitHub <https://github.com/IshitaTakeshi>`__
 1. `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
 -------------------------------------------------------------------------------
 
+.. image:: images/road-damage-1.png
+    :width: 800
+
 Road damage detector based on SSD(Single Shot Multibox Detector).
 The detailed explanation is at `my Qiita blog page (in Japanese) <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__.
 Trained models are published along with the source code.
