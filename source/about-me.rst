@@ -69,13 +69,13 @@ Trained models are published along with the source code.
 What I did
 ~~~~~~~~~~
 
--  Trained SSD(VGG16) on the RoadDamageDataset
+-  Trained SSD(VGG16) on the RoadDamageDataset provided by Maeda et al. (2018) [#Maeda_et_al_2018]_
 -  Replaced VGG16 with ResNet-101 and evaluated the performance
 
 2. `PCANet <https://github.com/IshitaTakeshi/PCANet>`__
 -------------------------------------------------------
 
-| PCANet is a deep learning network for image classification that trains its weights with PCA,  which is proposed by Chan et al (2015).
+| PCANet is a deep learning network for image classification that trains its weights with PCA,  which is proposed by Chan et al. (2015) [#Chan_et_al_2015]_.
 | PCANet requires histogram calculation in the pooling layer, although there was no function support in CuPy.
 | I implemented the histogram calculation in CUDA and sent a pull request, and this has been merged into the CuPy repository.
   `#298 <https://github.com/cupy/cupy/pull/298>`__
@@ -87,8 +87,8 @@ PCANet can train quickly wihle representation ability is not strong. I combined 
 
 3. `SCW <https://github.com/IshitaTakeshi/SCW>`__
 -------------------------------------------------
-| Reimplementation of Soft Confidence-Weighted Learning.
-| SCW (Soft Confidence-Weighted Learning) is an online supervised learning algorithm which utilizes all the four salient properties:
+| Reimplementation of SCW (Soft Confidence-Weighted Learning) [#Wang_et_al_2012]_.
+| SCW is an online supervised learning algorithm which utilizes all the four salient properties:
 
 - Large margin training
 - Confidence weighting
@@ -98,3 +98,7 @@ PCANet can train quickly wihle representation ability is not strong. I combined 
 4. `DTrie <https://github.com/IshitaTakeshi/DTrie>`__
 -----------------------------------------------------
 The Trie data structure in D language.
+
+.. [#Maeda_et_al_2018] Maeda, Hiroya, et al. "Road damage detection using deep neural networks with images captured through a smartphone." arXiv preprint arXiv:1801.09454 (2018).
+.. [#Chan_et_al_2015] Chan, Tsung-Han, et al. "PCANet: A simple deep learning baseline for image classification?." IEEE transactions on image processing 24.12 (2015): 5017-5032.
+.. [#Wang_et_al_2012] Wang, Jialei, Peilin Zhao, and Steven CH Hoi. "Exact soft confidence-weighted learning." arXiv preprint arXiv:1206.4612 (2012).
