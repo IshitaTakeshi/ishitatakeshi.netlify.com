@@ -49,3 +49,77 @@ Deriving by :math:`\lambda`, we get :math:`\alpha`.
     }{
         (t_{x} - x_{r} t_{z}) ^ 2
     }
+
+
+Geometric disparity error
+-------------------------
+
+As the original paper suggests, we can approximately write
+
+.. math::
+    \mathbf{l}_0 + \lambda^{*} \begin{bmatrix} l_x \\ l_y \end{bmatrix}
+    = \mathbf{g}_0 + \gamma \begin{bmatrix} -g_y \\ g_x \end{bmatrix}
+
+
+We set :math:`\mathbf{l} = \begin{bmatrix} l_x \\ l_y \end{bmatrix}` and multiply :math:`\mathbf{g} = \begin{bmatrix} g_x \\ g_y \end{bmatrix}` from the right side. Then we get
+
+
+.. math::
+    (\mathbf{l}_0 + \lambda^{*} \cdot \mathbf{l})^{\top} \mathbf{g}
+    &= \mathbf{g}_{0}^{\top} \mathbf{g} \\
+    \lambda^{*} \cdot \mathbf{l}^{\top} \mathbf{g}
+    &= (\mathbf{g}_0 - \mathbf{l}_0)^{\top} \mathbf{g}\\
+
+Now we can regard :math:`\lambda^{*}` as a function of :math:`\mathbf{l}_0`
+
+.. math::
+    \lambda^{*} = \lambda^{*}(\mathbf{l}_0) = \frac{
+        (\mathbf{g}_0 - \mathbf{l}_0)^{\top}\mathbf{g}
+    }{
+        \mathbf{l}^{\top} \mathbf{g}
+    }
+
+
+We can calculate the variance of :math:`\lambda^{*}(\mathbf{l}_0)` from the propagation rule.
+
+.. math::
+    \sigma^{2}_{\lambda^{*}(\mathbf{l}_0)}
+    &= J_{\mathbf{\lambda}^{*}(\mathbf{l}_0)}
+    \begin{bmatrix}
+        \sigma^{2}_{l} & 0 \\
+        0 & \sigma^{2}_{l}
+    \end{bmatrix}
+    J^{\top}_{\mathbf{\lambda}^{*}(\mathbf{l}_0)} \\
+    J_{\lambda^{*}(\mathbf{l}_0)}
+    &= \frac{\mathbf{g}}{\mathbf{g}^{\top} \mathbf{l}} \\
+    \sigma^{2}_{\lambda^{*}(\mathbf{l}_0)}
+    &= \frac{
+        \sigma^{2}_{l} ||\mathbf{g}||^{2}
+    }{
+        (\mathbf{g} \cdot \mathbf{l})^{2}
+    }
+
+
+
+Photometric disparity error
+---------------------------
+
+.. math::
+    \mathbf{\lambda}^{*}(I) = \mathbf{\lambda}_0 + \frac{i_{ref} - I_{p}(\mathbf{\lambda}_0)}{g_{p}}
+
+.. math::
+    \sigma^{2}_{\mathbf{\lambda}^{*}(I)} &=
+    J_{\mathbf{\lambda}^{*}(I)}
+    \begin{bmatrix}
+        \sigma^{2}_{i} & 0 \\
+        0 & \sigma^{2}_{i}
+    \end{bmatrix}
+    J^{\top}_{\mathbf{\lambda}^{*}(I)}
+
+.. math::
+    J_{\mathbf{\lambda}^{*}(I)} = g^{-1}_{p}
+
+.. math::
+    \sigma^{2}_{\mathbf{\lambda}^{*}(I)} =
+        \frac{\sigma^{2}_{i}}{||g_{p}||^{2}}
+
