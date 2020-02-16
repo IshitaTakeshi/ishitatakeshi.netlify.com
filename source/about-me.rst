@@ -2,6 +2,8 @@
 About Me
 ========
 
+The oline version can be found at http://ishitatakeshi.netlify.com/about-me
+
 Education
 =========
 
@@ -56,7 +58,30 @@ My works
 
 My works are available on `GitHub <https://github.com/IshitaTakeshi>`__
 
-1. `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
+1. `Tadataka (under development) <https://github.com/IshitaTakeshi/Tadataka>`__
+-------------------------------------------------------------------------------
+
+This project aims to develop a Visual SLAM framework that is flexible and simple to use.
+
+Currently implemented algorithms:
+
+DVO (Dense Visual Odometry)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. raw:: html
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+Feature Based Visual Odometry
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+.. raw:: html
+
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/h4KrMJQDoX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+
+2. `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
 -------------------------------------------------------------------------------
 
 .. image:: images/road-damage-1.png
@@ -72,7 +97,8 @@ What I did
 -  Trained SSD(VGG16) on the RoadDamageDataset provided by Maeda et al. (2018) [#Maeda_et_al_2018]_
 -  Replaced VGG16 with ResNet-101 and evaluated the performance
 
-2. `PCANet <https://github.com/IshitaTakeshi/PCANet>`__
+
+3. `PCANet <https://github.com/IshitaTakeshi/PCANet>`__
 -------------------------------------------------------
 
 | PCANet is a deep learning network for image classification that trains its weights with PCA,  which is proposed by Chan et al. (2015) [#Chan_et_al_2015]_.
@@ -85,7 +111,7 @@ What I did
 
 PCANet can train quickly wihle representation ability is not strong. I combined PCANet with Bagging and succeeded to increase the representation ability while keeping the training speed.
 
-3. `SCW <https://github.com/IshitaTakeshi/SCW>`__
+4. `SCW <https://github.com/IshitaTakeshi/SCW>`__
 -------------------------------------------------
 | Reimplementation of SCW (Soft Confidence-Weighted Learning) [#Wang_et_al_2012]_.
 | SCW is an online supervised learning algorithm which utilizes all the four salient properties:
@@ -95,7 +121,7 @@ PCANet can train quickly wihle representation ability is not strong. I combined 
 - Capability to handle non-separable data
 - Adaptive margin
 
-4. `DTrie <https://github.com/IshitaTakeshi/DTrie>`__
+5. `DTrie <https://github.com/IshitaTakeshi/DTrie>`__
 -----------------------------------------------------
 The Trie data structure in D language.
 
