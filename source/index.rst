@@ -17,3 +17,4 @@ Welcome to the Ishita's homepage
    camera-motion
    so3
    sba
+   dvo
