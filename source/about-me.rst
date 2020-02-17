@@ -2,9 +2,6 @@
 About Me
 ========
 
-| The oline version can be found at http://ishitatakeshi.netlify.com/about-me.
-| You can access to GitHub links and YouTube demo videos.
-
 Education
 =========
 
@@ -69,23 +66,21 @@ Currently implemented algorithms:
 DVO (Dense Visual Odometry) [#Steinbrucker_et_al_2011]_ [#Kerl_et_al_2013]_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Estimating camera motion from RGB-D video sequence.
+
 .. raw:: html
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-| Estimating camera motion from RGB-D video sequence.
-| The YouTube video can be found at https://youtu.be/oDgBgdHUwOM
 
 
 Feature Based Visual Odometry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+Estimating camera motion and 3D structure from a single RGB camera.
+
 .. raw:: html
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/h4KrMJQDoX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
-| Estimating camera motion and 3D structure from a single RGB camera.
-| The YouTube video cane be found at https://youtu.be/h4KrMJQDoX4
 
 
 2. `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
