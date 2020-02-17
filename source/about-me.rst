@@ -2,7 +2,8 @@
 About Me
 ========
 
-The oline version can be found at http://ishitatakeshi.netlify.com/about-me
+| The oline version can be found at http://ishitatakeshi.netlify.com/about-me.
+| You can access to GitHub links and YouTube demo videos.
 
 Education
 =========
@@ -19,8 +20,8 @@ Work Experience
 `Usagee Inc. <http://usagee.co.jp/>`__
 --------------------------------------
 
--  Research and development of Machine Learinng & Computer Vision models
--  Provideing effective solutions to customers by implementing models & systems
+-  Research and development of Machine Learinng & Computer Vision methods
+-  Providing effective solutions to customers
 
 | May 2014 - 2017
 | Part-time job
@@ -28,7 +29,7 @@ Work Experience
 `Cookpad Inc. <https://info.cookpad.com/en>`__
 ----------------------------------------------
 
-Design and implementation of machine learning models for ingredient recognition from food images.
+Design and implementation of machine learning methods for ingredient recognition from food images.
 
 Patent
 ~~~~~~
@@ -65,12 +66,15 @@ This project aims to develop a Visual SLAM framework that is flexible and simple
 
 Currently implemented algorithms:
 
-DVO (Dense Visual Odometry)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+DVO (Dense Visual Odometry) [#Steinbrucker_et_al_2011]_ [#Kerl_et_al_2013]_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 .. raw:: html
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+| Estimating camera motion from RGB-D video sequence.
+| The YouTube video can be found at https://youtu.be/oDgBgdHUwOM
 
 
 Feature Based Visual Odometry
@@ -80,6 +84,9 @@ Feature Based Visual Odometry
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/h4KrMJQDoX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
+| Estimating camera motion and 3D structure from a single RGB camera.
+| The YouTube video cane be found at https://youtu.be/h4KrMJQDoX4
+
 
 2. `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
 -------------------------------------------------------------------------------
@@ -87,9 +94,9 @@ Feature Based Visual Odometry
 .. image:: images/road-damage-1.png
     :width: 800
 
-Road damage detector based on SSD(Single Shot Multibox Detector).
-The detailed explanation is at `my Qiita blog page (in Japanese) <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__.
-Trained models are published along with the source code.
+| Road damage detector based on SSD(Single Shot Multibox Detector).
+| The detailed explanation is at `my Qiita blog page (in Japanese) <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__.
+| Trained models are published along with the source code.
 
 What I did
 ~~~~~~~~~~
@@ -101,19 +108,21 @@ What I did
 3. `PCANet <https://github.com/IshitaTakeshi/PCANet>`__
 -------------------------------------------------------
 
-| PCANet is a deep learning network for image classification that trains its weights with PCA,  which is proposed by Chan et al. (2015) [#Chan_et_al_2015]_.
-| PCANet requires histogram calculation in the pooling layer, although there was no function support in CuPy.
-| I implemented the histogram calculation in CUDA and sent a pull request, and this has been merged into the CuPy repository.
+| PCANet is a neural network for image classification that trains its weights with PCA [#Chan_et_al_2015]_.
+| PCANet requires histogram calculation in the pooling layer. Although there was no GPU support for histogram calculation in CuPy.
+| I implemented the histogram calculation in CUDA and sent a pull request, which has been merged into the CuPy repository.
   `#298 <https://github.com/cupy/cupy/pull/298>`__
 
 `Ensemble PCANet <https://github.com/IshitaTakeshi/PCANet/tree/ensemble>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-PCANet can train quickly wihle representation ability is not strong. I combined PCANet with Bagging and succeeded to increase the representation ability while keeping the training speed.
+| PCANet can train quickly. On the other hand, its representation ability is not strong.
+| I combined PCANet with Bagging and succeeded to increase the representation ability while keeping the training speed.
+| This idea is proposed to `JSAI 2017 <https://www.ai-gakkai.or.jp/jsai2017/webprogram/2017/paper-504.html>`__.
 
 4. `SCW <https://github.com/IshitaTakeshi/SCW>`__
 -------------------------------------------------
-| Reimplementation of SCW (Soft Confidence-Weighted Learning) [#Wang_et_al_2012]_.
+| Implementation of SCW (Soft Confidence-Weighted Learning) [#Wang_et_al_2012]_.
 | SCW is an online supervised learning algorithm which utilizes all the four salient properties:
 
 - Large margin training
@@ -125,6 +134,8 @@ PCANet can train quickly wihle representation ability is not strong. I combined 
 -----------------------------------------------------
 The Trie data structure in D language.
 
+.. [#Steinbrucker_et_al_2011] Steinbrücker Frank, Jürgen Sturm, and Daniel Cremers. "Real-time visual odometry from dense RGB-D images." Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on. IEEE, 2011.
+.. [#Kerl_et_al_2013] Kerl, Christian, Jürgen Sturm, and Daniel Cremers. "Robust odometry estimation for RGB-D cameras." Robotics and Automation (ICRA), 2013 IEEE International Conference on. IEEE, 2013.
 .. [#Maeda_et_al_2018] Maeda, Hiroya, et al. "Road damage detection using deep neural networks with images captured through a smartphone." arXiv preprint arXiv:1801.09454 (2018).
 .. [#Chan_et_al_2015] Chan, Tsung-Han, et al. "PCANet: A simple deep learning baseline for image classification?." IEEE transactions on image processing 24.12 (2015): 5017-5032.
 .. [#Wang_et_al_2012] Wang, Jialei, Peilin Zhao, and Steven CH Hoi. "Exact soft confidence-weighted learning." arXiv preprint arXiv:1206.4612 (2012).
