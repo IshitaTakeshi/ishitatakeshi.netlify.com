@@ -1,13 +1,18 @@
+========
+LSD-SLAM
+========
+
+
 Notations
-----------------
+---------
 
 :math:`\dot{\mathbf{x}}` is the homogeneous representation of :math:`\mathbf{x}`.
 
 Depth estimation
 ----------------
 
-Calculation of :math:`alpha`
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Calculation of :math:`\alpha`
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In the computation below, we assume that coordinates are on the normalized image plane, which implies that the intrinsic matrix is identity (:math:`K = I`).
 
@@ -31,7 +36,7 @@ Solving the equation :eq:`orthogonality` for :math:`d^{-1}_{k}`, we get
 
 .. math::
     d^{-1}_{k}(\lambda) = \frac{
-        x_{r} \mathbf{r}_3^{\top} \dot{\mathbf{x}}_k + \mathbf{r}_1^{\top}\dot{\mathbf{x}}_k
+        x_{r} \mathbf{r}_3^{\top} \dot{\mathbf{x}}_k - \mathbf{r}_1^{\top}\dot{\mathbf{x}}_k
     }{
         t_{x} - x_{r} t_{z}
     }
@@ -44,8 +49,8 @@ Deriving by :math:`\lambda`, we get :math:`\alpha`.
     \alpha
     = \frac{\partial d^{-1}_{k}}{\partial \lambda}
     = \bar{x}_{r} \frac{
-        t_{x} \mathbf{r}_{3}^{\top} \dot{\mathbf{x}}_k -
-        t_{z} \mathbf{r}_{1}^{\top} \dot{\mathbf{x}}_k
+        t_{z} \mathbf{r}_{1}^{\top} \dot{\mathbf{x}}_k -
+        t_{x} \mathbf{r}_{3}^{\top} \dot{\mathbf{x}}_k
     }{
         (t_{x} - x_{r} t_{z}) ^ 2
     }
@@ -54,7 +59,7 @@ Deriving by :math:`\lambda`, we get :math:`\alpha`.
 Geometric disparity error
 -------------------------
 
-As the original paper suggests, we can approximately write
+As the thesis suggests, we can approximately write
 
 .. math::
     \mathbf{l}_0 + \lambda^{*} \begin{bmatrix} l_x \\ l_y \end{bmatrix}
@@ -121,5 +126,5 @@ Photometric disparity error
 
 .. math::
     \sigma^{2}_{\mathbf{\lambda}^{*}(I)} =
-        \frac{\sigma^{2}_{i}}{||g_{p}||^{2}}
+        \frac{2 \sigma^{2}_{i}}{g_{p}^{2}}
 
