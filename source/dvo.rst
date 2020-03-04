@@ -198,7 +198,7 @@ warping関数を近似する．
 
     と表現したとき
 
-    :math:`\mathrm{stack}(G) = \begin{bmatrix} r_{11} & r_{21} & r_{33} & r_{12} & r_{22} & r_{32} & r_{13} & r_{23} & r_{33} & t_{1} & t_{2} & t_{3} \end{bmatrix}`
+    :math:`\mathrm{stack}(G) = \begin{bmatrix} r_{11} & r_{21} & r_{33} & r_{12} & r_{22} & r_{32} & r_{13} & r_{23} & r_{33} & t_{1} & t_{2} & t_{3} \end{bmatrix}^{\top}`
 
 ここで， :math:`\mathrm{stack}(\skew{\pose_{k}} \cdot G(t_{0})) = J_{G} \cdot \pose` を満たすような :math:`J_{G}` が存在する(具体的な導出は後で示す)．これを用いると，
 
