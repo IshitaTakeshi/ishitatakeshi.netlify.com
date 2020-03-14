@@ -5,14 +5,15 @@ About Me
 Education
 =========
 
-| National Institute of Technology, Tokyo College
-| April 2012 - March 2017
+| National Institute of Technology, Tokyo College, Advanced Course
+| April 2017 - March 2019
 
 | Student exchange with Metropolia University of Applied Sciences
 | August 2018 - December 2018
 
-| National Institute of Technology, Tokyo College, Advanced Course
-| April 2017 - March 2019
+| National Institute of Technology, Tokyo College
+| April 2012 - March 2017
+
 
 Work Experience
 ===============
