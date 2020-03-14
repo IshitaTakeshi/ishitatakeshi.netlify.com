@@ -129,9 +129,6 @@ What I did
 - Capability to handle non-separable data
 - Adaptive margin
 
-5. `DTrie <https://github.com/IshitaTakeshi/DTrie>`__
------------------------------------------------------
-The Trie data structure in D language.
 
 .. [#Steinbrucker_et_al_2011] Steinbrücker Frank, Jürgen Sturm, and Daniel Cremers. "Real-time visual odometry from dense RGB-D images." Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on. IEEE, 2011.
 .. [#Kerl_et_al_2013] Kerl, Christian, Jürgen Sturm, and Daniel Cremers. "Robust odometry estimation for RGB-D cameras." Robotics and Automation (ICRA), 2013 IEEE International Conference on. IEEE, 2013.
