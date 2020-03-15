@@ -18,14 +18,20 @@ Education
 Work Experience
 ===============
 
-`Usagee Inc. <http://usagee.co.jp/>`__
+`Mitou Program <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
+---------------------------------------------------------------------------
+
+Development of a Visual SLAM framework
+
+| April 2019 - present
+
+
+`DeNA Co., Ltd. <https://dena.com/>`__
 --------------------------------------
 
--  Research and development of Machine Learinng & Computer Vision methods
--  Providing effective solutions to customers
-
-| May 2014 - 2017
+| April 2017 - present
 | Part-time job
+
 
 `Cookpad Inc. <https://info.cookpad.com/en>`__
 ----------------------------------------------
@@ -41,18 +47,15 @@ The model I proposed is granted as a patent
 | Dec 2016 - Jul 2017
 | Part-time job
 
-`DeNA Co., Ltd. <https://dena.com/>`__
+
+`Usagee Inc. <http://usagee.co.jp/>`__
 --------------------------------------
 
-| April 2017 - present
+-  Research and development of Machine Learinng & Computer Vision methods
+-  Providing effective solutions to customers
+
+| May 2014 - 2017
 | Part-time job
-
-`Mitou Program <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
----------------------------------------------------------------------------
-
-Development of a Visual SLAM framework
-
-| April 2019 - present
 
 
 My works
@@ -133,10 +136,7 @@ What I did
 Article
 =======
 
-`日経ソフトウエア 2017 8月号 「Pythonで機械学習」 <https://shop.nikkeibp.co.jp/front/commodity/0000/SW1231/>`__
----------------------------------------------------------------------------------------------------------------
-
-Wrote basic introduction of machine learning and explained how deep learning has grown up in recent years.
+- `日経ソフトウエア 2017 8月号 「Pythonで機械学習」 <https://shop.nikkeibp.co.jp/front/commodity/0000/SW1231/>`__
 
 
 .. [#Steinbrucker_et_al_2011] Steinbrücker Frank, Jürgen Sturm, and Daniel Cremers. "Real-time visual odometry from dense RGB-D images." Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on. IEEE, 2011.
