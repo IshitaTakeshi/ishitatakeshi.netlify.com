@@ -73,17 +73,16 @@ Currently implemented algorithms:
 DVO (Dense Visual Odometry) [#Steinbrucker_et_al_2011]_ [#Kerl_et_al_2013]_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Estimating camera motion from RGB-D video sequence.
+Estimating camera motion from RGB-D video sequence (`YouTube video <https://youtu.be/oDgBgdHUwOM>`__).
 
 .. raw:: html
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
 Feature Based Visual Odometry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Estimating camera motion and 3D structure from a single RGB camera.
+Estimating camera motion and 3D structure from a single RGB camera (`YouTube video <https://youtu.be/h4KrMJQDoX4>`__).
 
 .. raw:: html
 
