@@ -1,19 +1,6 @@
-========
-About Me
-========
-
-Education
-=========
-
-| National Institute of Technology, Tokyo College, Advanced Course
-| April 2017 - March 2019
-
-| Student exchange with Metropolia University of Applied Sciences
-| August 2018 - December 2018
-
-| National Institute of Technology, Tokyo College
-| April 2012 - March 2017
-
+==============
+Takeshi Ishita
+==============
 
 Work Experience
 ===============
@@ -56,6 +43,19 @@ The model I proposed is granted as a patent
 
 | May 2014 - 2017
 | Part-time job
+
+
+Education
+=========
+
+| National Institute of Technology, Tokyo College, Advanced Course
+| April 2017 - March 2019
+
+| Student exchange with Metropolia University of Applied Sciences
+| August 2018 - December 2018
+
+| National Institute of Technology, Tokyo College
+| April 2012 - March 2017
 
 
 My works
