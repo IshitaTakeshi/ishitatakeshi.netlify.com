@@ -96,7 +96,7 @@ Estimating camera motion and 3D structure from a single RGB camera.
 .. image:: images/road-damage-1.png
     :width: 800
 
-| Road damage detector based on SSD(Single Shot Multibox Detector).
+| Road damage detector based on SSD (Single Shot Multibox Detector).
 | The detailed explanation is at `my Qiita blog page (in Japanese) <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__.
 | Trained models are published along with the source code.
 
@@ -138,6 +138,13 @@ Article
 
 - `日経ソフトウエア 2017 8月号 「Pythonで機械学習」 <https://shop.nikkeibp.co.jp/front/commodity/0000/SW1231/>`__
 
+Presentations
+=============
+
+https://speakerdeck.com/ishitatakeshi
+
+References
+==========
 
 .. [#Steinbrucker_et_al_2011] Steinbrücker Frank, Jürgen Sturm, and Daniel Cremers. "Real-time visual odometry from dense RGB-D images." Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on. IEEE, 2011.
 .. [#Kerl_et_al_2013] Kerl, Christian, Jürgen Sturm, and Daniel Cremers. "Robust odometry estimation for RGB-D cameras." Robotics and Automation (ICRA), 2013 IEEE International Conference on. IEEE, 2013.
