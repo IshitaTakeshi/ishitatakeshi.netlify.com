@@ -134,9 +134,9 @@ What I did
 
 Blog
 ====
-* `The Zen of Python <https://qiita.com/IshitaTakeshi/items/e4145921c8dbf7ba57ef>`__
-* `Kalman Filter <https://qiita.com/IshitaTakeshi/items/740ac7e9b549eee4cc04>`__
-* `Tomasi-Kanade 3D reconstruction <https://qiita.com/IshitaTakeshi/items/297331b3878e72c65276>`__
+- `The Zen of Python <https://qiita.com/IshitaTakeshi/items/e4145921c8dbf7ba57ef>`__
+- `Kalman Filter <https://qiita.com/IshitaTakeshi/items/740ac7e9b549eee4cc04>`__
+- `Tomasi-Kanade 3D reconstruction <https://qiita.com/IshitaTakeshi/items/297331b3878e72c65276>`__
 
 Article
 =======
@@ -146,7 +146,9 @@ Article
 Presentations
 =============
 
-https://speakerdeck.com/ishitatakeshi
+- `Sparse Bundle Adjustment <https://speakerdeck.com/ishitatakeshi/sparse-bundle-adjustment>`__
+- `3D rotation representation in so(3) <https://speakerdeck.com/ishitatakeshi/3d-rotation-representation-and-its-implementation>`__
+- `Histogram calculation in CuPy <https://speakerdeck.com/ishitatakeshi/cudadehisutoguramuji-suan-woshu-itecupynimergesitemoratuta-1>`__
 
 References
 ==========
