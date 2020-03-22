@@ -132,6 +132,12 @@ What I did
 - Adaptive margin
 
 
+Blog
+====
+* `The Zen of Python <https://qiita.com/IshitaTakeshi/items/e4145921c8dbf7ba57ef>`__
+* `Kalman Filter <https://qiita.com/IshitaTakeshi/items/740ac7e9b549eee4cc04>`__
+* `Tomasi-Kanade 3D reconstruction <https://qiita.com/IshitaTakeshi/items/297331b3878e72c65276>`__
+
 Article
 =======
 
