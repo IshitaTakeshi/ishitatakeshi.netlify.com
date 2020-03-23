@@ -312,7 +312,7 @@ warping関数を近似する．
             \frac{f_{x}}{z} & 0 & -\frac{f_{x}x}{z^2} &
             -\frac{f_{x}x'y'}{z'^2} & f_{x}(1+\frac{x'^2}{z'^2}) & -\frac{f_{x}y'}{z'} \\
             0 & \frac{f_{y}}{z} & -\frac{f_{y}y}{z^2} &
-            -f_{y}(1+\frac{y'^2}{z'^2}) & \frac{f_{x}x'y'}{z'^2} & \frac{f_{y}x'}{z'} \\
+            -f_{y}(1+\frac{y'^2}{z'^2}) & \frac{f_{y}x'y'}{z'^2} & \frac{f_{y}x'}{z'} \\
         \end{bmatrix}
     \end{align}
 
