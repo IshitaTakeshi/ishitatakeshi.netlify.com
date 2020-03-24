@@ -287,7 +287,7 @@ warping関数を近似する．
     0 & 0 & x & 0 & 0 & y & 0 & 0 & z & 0 & 0 & 1 \\
     \end{bmatrix}
 
-である． :math:`\left[x', y', z'\right] = g(G(t), \mathbf{p})` とおくと
+である． :math:`\mathbf{p}' = \left[x', y', z'\right] = g(G(t), \mathbf{p})` とおくと
 
 .. math::
     \frac{\partial g(G(t), \mathbf{p})}{\partial \mathrm{stack}(G)}
@@ -304,7 +304,7 @@ warping関数を近似する．
     \begin{align}
     C_{i}
     &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}} \cdot
-        \frac{\partial \mathbf{\pi}(\mathbf{p}_{i})}{\partial \mathbf{p}} \cdot
+        \frac{\partial \mathbf{\pi}(\mathbf{p}'_{i})}{\partial \mathbf{p}} \cdot
         \frac{\partial g(G(t_{1}), \mathbf{p}_{i})}{\partial \mathrm{stack}(G)} \cdot
         J_{G} \\
     &= \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
