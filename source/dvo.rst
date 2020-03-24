@@ -304,14 +304,14 @@ warping関数を近似する．
     \begin{align}
     C_{i}
     &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}} \cdot
-        \frac{\partial \mathbf{\pi}(\mathbf{p}'_{i})}{\partial \mathbf{p}} \cdot
+        \frac{\partial \mathbf{\pi}(\mathbf{p}'_{i})}{\partial \mathbf{p}'} \cdot
         \frac{\partial g(G(t_{1}), \mathbf{p}_{i})}{\partial \mathrm{stack}(G)} \cdot
         J_{G} \\
     &= \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
        \begin{bmatrix}
-            \frac{f_{x}}{z} & 0 & -\frac{f_{x}x}{z^2} &
+            \frac{f_{x}}{z'} & 0 & -\frac{f_{x}x'}{z'^2} &
             -\frac{f_{x}x'y'}{z'^2} & f_{x}(1+\frac{x'^2}{z'^2}) & -\frac{f_{x}y'}{z'} \\
-            0 & \frac{f_{y}}{z} & -\frac{f_{y}y}{z^2} &
+            0 & \frac{f_{y}}{z'} & -\frac{f_{y}y'}{z'^2} &
             -f_{y}(1+\frac{y'^2}{z'^2}) & \frac{f_{y}x'y'}{z'^2} & \frac{f_{y}x'}{z'} \\
         \end{bmatrix}
     \end{align}
