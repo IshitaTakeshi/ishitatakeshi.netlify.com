@@ -84,7 +84,7 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 
 .. math::
     E(\pose)
-    = \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2
+    = \sum_{i}[I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})) - I_{t_{0}}(\mathbf{x}_{i})]^2
     :label: error-function-dvo
 
 
@@ -148,7 +148,7 @@ warping関数を近似する．
 .. math::
     \begin{align}
     E(\pose)
-        &= \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2 \\
+        &= \sum_{i}[I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})) - I_{t_{0}}(\mathbf{x}_{i})]^2 \\
         &\approx \sum_{i}[
             I_{t_{1}}(\mathbf{x}_{i})-I_{t_{0}}(\mathbf{x}_{i}) +
             \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
