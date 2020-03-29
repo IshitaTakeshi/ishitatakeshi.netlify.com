@@ -10,13 +10,13 @@ Work Experience
 
 Development of a Visual SLAM framework
 
-| April 2019 - present
+| April 2019 - March 2020
 
 
 `DeNA Co., Ltd. <https://dena.com/>`__
 --------------------------------------
 
-| April 2017 - present
+| April 2017 - March 2020
 | Part-time job
 
 
@@ -41,7 +41,7 @@ The model I proposed is granted as a patent
 -  Research and development of Machine Learinng & Computer Vision methods
 -  Providing effective solutions to customers
 
-| May 2014 - 2017
+| May 2014 - Jan 2017
 | Part-time job
 
 
