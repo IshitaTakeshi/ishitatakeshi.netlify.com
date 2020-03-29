@@ -113,13 +113,14 @@
 .. |sba2| image:: images/reconstruction-with-ba.png
     :width: 100%
 
+.. _sba_sabacan:
 .. table:: 図は円筒の復元結果を上から見たものである．左側がBundle Adjusmentを適用せずに復元した結果であり，右側がBundle Adjustmentを適用しながら復元した結果である．左側は完全に地図が破綻しているのに対して右側は弧が正しく復元できていることがわかる．
 
     +--------+--------+
     | |sba1| | |sba2| |
     +--------+--------+
 
-| 　Visual Odometryは動作過程で地図やカメラ姿勢に誤差が蓄積していってしまう．この誤差を取り除く操作がBundle Adjustmentである．
+| 　Visual Odometryは動作過程で地図やカメラ姿勢に誤差が蓄積していってしまう．この誤差を取り除く操作がBundle Adjustmentである (:numref:`sba_sabacan`)．
 | 　Bundle Adjustmentは再投影誤差を誤差の指標とし，これが最小になるような3次元点群座標とカメラ姿勢を求める問題である．
 | 　Bundle Adjustmentでは，LM法(あるいはGauss-Newton法)によって再投影誤差を最小化する3次元点群座標とカメラ姿勢を探索する．LM法の更新過程では誤差関数のHessianの逆行列が要求されるが，3次元復元ではHessianが非常に巨大になり，逆行列計算のコストが爆発してしまうという問題がある．
 | 　SBA [#Lourakis_et_al_2009]_ は誤差関数のJacobianのスパース性に着目し，Hessianの逆行列の計算コストを大幅に減少させた手法である．私はこれを実装し，Pythonパッケージとして公開した．また， `第54回CV勉強会 <https://kantocv.connpass.com/event/141991/>`__ で手法の解説を行った．
@@ -153,10 +154,17 @@
 `RoadDamageDetector <https://github.com/IshitaTakeshi/RoadDamageDetector>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-.. image:: images/road-damage-1.png
-.. image:: images/road-damage-2.png
+.. _road-damage-detection-1:
+.. figure:: images/road-damage-1.png
 
-| 　道路の損傷を検出することができる，SSD(Single Shot Multibox Detector)をベースとしたニューラルネットワークを作成した．
+    横断歩道のかすれを検出できている
+
+.. _road-damage-detection-2:
+.. figure:: images/road-damage-2.png
+
+    白線のかすれとアスファルトのひび割れと検出できている
+
+| 　道路の損傷を検出することができる，SSD(Single Shot Multibox Detector)をベースとしたニューラルネットワークを作成した．横断歩道や白線のかすれ，アスファルトのひび割れなどを検出することができる (:numref:`road-damage-detection-1` :numref:`road-damage-detection-2`)．
 | 　本実験ではSSD内部にある特徴マップ抽出用CNNをVGG16からResNet-101に変更し，実行速度と検出精度を比較した．学習データの不足により検出精度は向上させられなかったが，CPU上での実行速度はVGG16の場合よりも2倍以上高速化できた．
 | 　ResNet-101を選定した理由など，詳細は `Qiita <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__ に書かれている．また，この取り組みについて `第45回CV勉強会 <https://kantocv.connpass.com/event/81006/>`__ で発表した．
 
@@ -169,6 +177,7 @@
 .. |tomasi-kanade-input2| image:: images/tomasi-kanade-input-2.png
     :width: 100%
 
+.. _tomasi-kanade-input:
 .. table:: 入力された2次元点群
 
     +------------------------+------------------------+
@@ -181,13 +190,14 @@
 .. |tomasi-kanade-output2| image:: images/tomasi-kanade-output-2.png
     :width: 100%
 
+.. _tomasi-kanade-output:
 .. table:: 復元結果
 
     +-------------------------+-------------------------+
     | |tomasi-kanade-output1| | |tomasi-kanade-output2| |
     +-------------------------+-------------------------+
 
-| 　Tomasi-Kanade法は古典的な3次元復元手法のひとつである．
+| 　Tomasi-Kanade法は古典的な3次元復元手法のひとつである．複数の視点から観測された2次元点から，3次元点群を復元することができる (:numref:`tomasi-kanade-input` :numref:`tomasi-kanade-output`)．
 | 　カメラモデルとして正投影を仮定していたり，occlusionに対応できなかったりと，非常に強い制約下でなければ動作しないという欠点はあるものの，アルバイトの業務で有用であったため実装した．
 | 　手法の詳細な解説は `Qiita <https://qiita.com/IshitaTakeshi/items/297331b3878e72c65276>`__ に書かれている．
 
