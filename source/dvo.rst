@@ -3,7 +3,7 @@ DVO
 
 .. raw:: html
 
-    <iframe width="560" height="315" src="https://www.youtube.com/embed/a46r5MIqL44" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 .. math::
@@ -84,7 +84,7 @@ Steinbrückerらの手法 [#Steinbrucker_et_al_2011]_
 
 .. math::
     E(\pose)
-    = \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2
+    = \sum_{i}[I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})) - I_{t_{0}}(\mathbf{x}_{i})]^2
     :label: error-function-dvo
 
 
@@ -148,7 +148,7 @@ warping関数を近似する．
 .. math::
     \begin{align}
     E(\pose)
-        &= \sum_{i}[I_{t_{0}}(\mathbf{x}_{i})-I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1}))]^2 \\
+        &= \sum_{i}[I_{t_{1}}(\mathbf{w}_{\pose}(\mathbf{x}_{i}, t_{1})) - I_{t_{0}}(\mathbf{x}_{i})]^2 \\
         &\approx \sum_{i}[
             I_{t_{1}}(\mathbf{x}_{i})-I_{t_{0}}(\mathbf{x}_{i}) +
             \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
@@ -198,7 +198,7 @@ warping関数を近似する．
 
     と表現したとき
 
-    :math:`\mathrm{stack}(G) = \begin{bmatrix} r_{11} & r_{21} & r_{33} & r_{12} & r_{22} & r_{32} & r_{13} & r_{23} & r_{33} & t_{1} & t_{2} & t_{3} \end{bmatrix}`
+    :math:`\mathrm{stack}(G) = \begin{bmatrix} r_{11} & r_{21} & r_{33} & r_{12} & r_{22} & r_{32} & r_{13} & r_{23} & r_{33} & t_{1} & t_{2} & t_{3} \end{bmatrix}^{\top}`
 
 ここで， :math:`\mathrm{stack}(\skew{\pose_{k}} \cdot G(t_{0})) = J_{G} \cdot \pose` を満たすような :math:`J_{G}` が存在する(具体的な導出は後で示す)．これを用いると，
 
@@ -234,8 +234,8 @@ warping関数を近似する．
     \begin{align}
     C_{i}
     &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
-        \cdot \frac{\partial \mathbf{\pi}(g(G(t_{0}, \mathbf{p})))}{\partial g}
-        \cdot \frac{\partial g(G(t_{0}, \mathbf{p}))}{\partial \mathrm{stack}(G)}
+        \cdot \frac{\partial \mathbf{\pi}(g(G(t_{0}, \mathbf{p}_{i})))}{\partial g}
+        \cdot \frac{\partial g(G(t_{0}, \mathbf{p}_{i}))}{\partial \mathrm{stack}(G)}
         \cdot J_{G} \cdot \pose \\
     y_{i}
     &= -\left[ I_{t_{1}}(\mathbf{x}_{i}) - I_{t_{0}}(\mathbf{x}_{i}) \right]
@@ -287,7 +287,7 @@ warping関数を近似する．
     0 & 0 & x & 0 & 0 & y & 0 & 0 & z & 0 & 0 & 1 \\
     \end{bmatrix}
 
-である． :math:`\left[x', y', z'\right] = g(G(t), \mathbf{p})` とおくと
+である． :math:`\mathbf{p}' = \left[x', y', z'\right] = g(G(t), \mathbf{p})` とおくと
 
 .. math::
     \frac{\partial g(G(t), \mathbf{p})}{\partial \mathrm{stack}(G)}
@@ -304,15 +304,15 @@ warping関数を近似する．
     \begin{align}
     C_{i}
     &=  \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}} \cdot
-        \frac{\partial \mathbf{\pi}(\mathbf{p})}{\partial \mathbf{p}} \cdot
-        \frac{\partial g(G(t_{1}), \mathbf{p})}{\partial \mathrm{stack}(G)} \cdot
+        \frac{\partial \mathbf{\pi}(\mathbf{p}'_{i})}{\partial \mathbf{p}'} \cdot
+        \frac{\partial g(G(t_{1}), \mathbf{p}_{i})}{\partial \mathrm{stack}(G)} \cdot
         J_{G} \\
     &= \frac{\partial I_{t_{1}}(\mathbf{x}_{i})}{\partial \mathbf{x}}
        \begin{bmatrix}
-            \frac{f_{x}}{z} & 0 & -\frac{f_{x}x}{z^2} &
+            \frac{f_{x}}{z'} & 0 & -\frac{f_{x}x'}{z'^2} &
             -\frac{f_{x}x'y'}{z'^2} & f_{x}(1+\frac{x'^2}{z'^2}) & -\frac{f_{x}y'}{z'} \\
-            0 & \frac{f_{y}}{z} & -\frac{f_{y}y}{z^2} &
-            -f_{y}(1+\frac{y'^2}{z'^2}) & \frac{f_{x}x'y'}{z'^2} & \frac{f_{y}x'}{z'} \\
+            0 & \frac{f_{y}}{z'} & -\frac{f_{y}y'}{z'^2} &
+            -f_{y}(1+\frac{y'^2}{z'^2}) & \frac{f_{y}x'y'}{z'^2} & \frac{f_{y}x'}{z'} \\
         \end{bmatrix}
     \end{align}
 

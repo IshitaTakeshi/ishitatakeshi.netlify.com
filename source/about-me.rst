@@ -1,27 +1,24 @@
-========
-About Me
-========
-
-Education
-=========
-
-| National Institute of Technology, Tokyo College
-| April 2012 - March 2017
-
-| National Institute of Technology, Tokyo College, Advanced Course
-| April 2017 - March 2019
+==============
+Takeshi Ishita
+==============
 
 Work Experience
 ===============
 
-`Usagee Inc. <http://usagee.co.jp/>`__
+`Mitou Program <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
+---------------------------------------------------------------------------
+
+Development of a Visual SLAM framework
+
+| April 2019 - present
+
+
+`DeNA Co., Ltd. <https://dena.com/>`__
 --------------------------------------
 
--  Research and development of Machine Learinng & Computer Vision methods
--  Providing effective solutions to customers
-
-| May 2014 - 2017
+| April 2017 - present
 | Part-time job
+
 
 `Cookpad Inc. <https://info.cookpad.com/en>`__
 ----------------------------------------------
@@ -37,18 +34,28 @@ The model I proposed is granted as a patent
 | Dec 2016 - Jul 2017
 | Part-time job
 
-`DeNA Co., Ltd. <https://dena.com/>`__
+
+`Usagee Inc. <http://usagee.co.jp/>`__
 --------------------------------------
 
-| April 2017 - present
+-  Research and development of Machine Learinng & Computer Vision methods
+-  Providing effective solutions to customers
+
+| May 2014 - 2017
 | Part-time job
 
-`Mitou Program <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
----------------------------------------------------------------------------
 
-Development of a Visual SLAM framework
+Education
+=========
 
-| April 2019 - present
+| National Institute of Technology, Tokyo College, Advanced Course
+| April 2017 - March 2019
+
+| Student exchange with Metropolia University of Applied Sciences
+| August 2018 - December 2018
+
+| National Institute of Technology, Tokyo College
+| April 2012 - March 2017
 
 
 My works
@@ -66,17 +73,16 @@ Currently implemented algorithms:
 DVO (Dense Visual Odometry) [#Steinbrucker_et_al_2011]_ [#Kerl_et_al_2013]_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Estimating camera motion from RGB-D video sequence.
+Estimating camera motion from RGB-D video sequence (`YouTube video <https://youtu.be/oDgBgdHUwOM>`__).
 
 .. raw:: html
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-
 Feature Based Visual Odometry
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Estimating camera motion and 3D structure from a single RGB camera.
+Estimating camera motion and 3D structure from a single RGB camera (`YouTube video <https://youtu.be/h4KrMJQDoX4>`__).
 
 .. raw:: html
 
@@ -89,7 +95,7 @@ Estimating camera motion and 3D structure from a single RGB camera.
 .. image:: images/road-damage-1.png
     :width: 800
 
-| Road damage detector based on SSD(Single Shot Multibox Detector).
+| Road damage detector based on SSD (Single Shot Multibox Detector).
 | The detailed explanation is at `my Qiita blog page (in Japanese) <https://qiita.com/IshitaTakeshi/items/915de731d8081e711ae5>`__.
 | Trained models are published along with the source code.
 
@@ -125,9 +131,28 @@ What I did
 - Capability to handle non-separable data
 - Adaptive margin
 
-5. `DTrie <https://github.com/IshitaTakeshi/DTrie>`__
------------------------------------------------------
-The Trie data structure in D language.
+
+Blog
+====
+- `The Zen of Python <https://qiita.com/IshitaTakeshi/items/e4145921c8dbf7ba57ef>`__
+- `Kalman Filter <https://qiita.com/IshitaTakeshi/items/740ac7e9b549eee4cc04>`__
+- `Tomasi-Kanade 3D reconstruction <https://qiita.com/IshitaTakeshi/items/297331b3878e72c65276>`__
+
+Article
+=======
+
+- `日経ソフトウエア 2017年8月号 「Pythonで機械学習」 <https://shop.nikkeibp.co.jp/front/commodity/0000/SW1231/>`__
+- `日経ソフトウエア 2020年5月号 「撮影した物体を3次元データで復元」 <https://shop.nikkeibp.co.jp/front/commodity/0000/SW1248/>`__
+
+Presentations
+=============
+
+- `Sparse Bundle Adjustment <https://speakerdeck.com/ishitatakeshi/sparse-bundle-adjustment>`__
+- `3D rotation representation in so(3) <https://speakerdeck.com/ishitatakeshi/3d-rotation-representation-and-its-implementation>`__
+- `Histogram calculation in CuPy <https://speakerdeck.com/ishitatakeshi/cudadehisutoguramuji-suan-woshu-itecupynimergesitemoratuta-1>`__
+
+References
+==========
 
 .. [#Steinbrucker_et_al_2011] Steinbrücker Frank, Jürgen Sturm, and Daniel Cremers. "Real-time visual odometry from dense RGB-D images." Computer Vision Workshops (ICCV Workshops), 2011 IEEE International Conference on. IEEE, 2011.
 .. [#Kerl_et_al_2013] Kerl, Christian, Jürgen Sturm, and Daniel Cremers. "Robust odometry estimation for RGB-D cameras." Robotics and Automation (ICRA), 2013 IEEE International Conference on. IEEE, 2013.
