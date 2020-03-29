@@ -14,6 +14,7 @@ Welcome to the Ishita's homepage
    :caption: Contents:
 
    about-me
+   about-me-ja
    camera-motion
    so3
    sba
