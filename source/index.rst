@@ -14,8 +14,8 @@ Welcome to the Ishita's homepage
    :caption: Contents:
 
    about-me
-   experience-ja
-   products-ja
+   experience
+   products
    camera-motion
    so3
    sba
