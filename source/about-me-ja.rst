@@ -26,7 +26,7 @@ About Me (日本語版)
 
     <iframe width="560" height="315" src="https://www.youtube.com/embed/oDgBgdHUwOM" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-**Feature Based Visual Odometry**
+**特徴点ベースのVisual Odometry**
 
 　単眼RGB画像列のみから3次元地図とカメラの軌跡を推定することができる.
 
@@ -198,11 +198,16 @@ About Me (日本語版)
 ブログ
 ------
 
+`リー代数による回転表現 <https://ishitatakeshi.netlify.com/so3.html>`__
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+　3次元復元ではカメラ姿勢表現にリー代数がしばしば用いられる．しかしながら，リー代数の解説は難解なものが多く，工学部の数学の授業を受けていれば読めるような資料はほとんど存在しない．そこで私は，基礎的な線形代数と微分を理解していれば読めるようなリー代数の解説を書いて公開した．
+
+
 `The Zen of Python <https://qiita.com/IshitaTakeshi/items/e4145921c8dbf7ba57ef>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-| The Zen of PythonはPythonプログラマが持つべき心構えを簡潔に述べたものである．
-| StackOverflowに詳細な解説が存在していたので，日本語に翻訳し，ひとつの記事としてまとめた．また，内容を `comb meet up! <https://connpass.com/event/7772/>`__ で解説した．
+| 　The Zen of PythonはPythonプログラマが持つべき心構えを簡潔に述べたものである．
+| 　StackOverflowに詳細な解説が存在していたので，日本語に翻訳し，ひとつの記事としてまとめた．また，内容を `comb meet up! <https://connpass.com/event/7772/>`__ で解説した．
 
 `カルマンフィルタってなに？ <https://qiita.com/IshitaTakeshi/items/740ac7e9b549eee4cc04>`__
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
