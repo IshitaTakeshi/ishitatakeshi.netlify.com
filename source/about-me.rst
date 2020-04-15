@@ -16,7 +16,7 @@ Development of a Visual SLAM framework
 `DeNA Co., Ltd. <https://dena.com/>`__
 --------------------------------------
 
-| April 2017 - March 2020
+| April 2018 - March 2020
 | Part-time job
 
 
@@ -52,7 +52,7 @@ Education
 | April 2017 - March 2019
 
 | Student exchange with Metropolia University of Applied Sciences
-| August 2018 - December 2018
+| August 2017 - December 2017
 
 | National Institute of Technology, Tokyo College
 | April 2012 - March 2017
