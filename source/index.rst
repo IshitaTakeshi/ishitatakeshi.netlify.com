@@ -15,7 +15,6 @@ Welcome to the Ishita's homepage
 
    about-me
    experience
-   products
    camera-motion
    so3
    sba
