@@ -215,8 +215,8 @@ Rodriguesの回転公式
 | したがって，ベクトル :math:`\mbf{v}` の :math:`\exp(\skew{\mbf{u}})` による微小回転は
 
 .. math::
-    \exp(\skew{\mbf{u}}) \mbf{v}
-    &\approx (I + \skew{\mbf{u}})\mbf{v} \\
+    \exp(\skew{\mbf{u}}) \cdot \mbf{v}
+    &\approx (I + \skew{\mbf{u}}) \cdot \mbf{v} \\
     &= \mbf{v} + \mbf{u} \times \mbf{v}
 
 | と近似することができる．
