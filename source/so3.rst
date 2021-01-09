@@ -134,7 +134,6 @@
 
 となり， :math:`R(t)` はやはり :math:`\SO(3)` の元であることがわかる．
 
-
 Rodriguesの回転公式
 -------------------
 
@@ -172,8 +171,9 @@ Rodriguesの回転公式
            \left( t - \frac{t^3}{3!} + \frac{t^5}{5!} - \dots \right)
            \skew{\mbf{\omega}} +
            \left( \frac{t^2}{2!} - \frac{t^4}{4!} + \frac{t^6}{6!} - \dots \right)
-           \skew{\mbf{\omega}}^2 .
+           \skew{\mbf{\omega}}^2
     \end{align}
+    :label: exp-taylor-expansion
 
 　:math:`\sin(t) = t - \frac{t^3}{3!} + \frac{t^5}{5!} - \dots` ， :math:`1 - \cos(t) = \frac{t^2}{2!} - \frac{t^4}{4!} + \frac{t^6}{6!} - \dots` を利用すれば，Rodriguesの回転公式を導くことができる．
 
@@ -197,5 +197,28 @@ Rodriguesの回転公式
     \end{align}
 
 とすることで，単一の引数からの指数写像の計算を可能にしている．
+
+外積との関係
+------------
+:math:`\mbf{u}, \mbf{v} \in \mathbb{R}^{3}` について， :math:`\skew{\mbf{u}}` と :math:`\mbf{v}` の積は :math:`\mbf{u}` と :math:`\mbf{v}` の外積に等しい．
+
+.. math::
+    \skew{\mbf{u}} \mbf{v}
+    &= \begin{bmatrix}
+    u_{2}v_{3}-u_{3}v_{2} \\
+    u_{3}v_{1}-u_{1}v_{3} \\
+    u_{1}v_{2}-u_{2}v_{1}
+    \end{bmatrix}
+    &= \mbf{u} \times \mbf{v}
+
+| また，:math:`\mbf{u}` のノルム :math:`||\mbf{u}||` がごく小さいとき， :math:`\exp(\skew{\mbf{u}}) \approx I + \skew{\mbf{u}}` と近似できる．これは :eq:`exp-taylor-expansion` において2次以降の項が無視できることから明らかである．
+| したがって，ベクトル :math:`\mbf{v}` の :math:`\exp(\skew{\mbf{u}})` による微小回転は
+
+.. math::
+    \exp(\skew{\mbf{u}}) \mbf{v}
+    &\approx (I + \skew{\mbf{u}})\mbf{v} \\
+    &= \mbf{v} + \mbf{u} \times \mbf{v}
+
+| と近似することができる．
 
 .. [#Ma_et_al_2012] Ma, Yi, et al. An invitation to 3-d vision: from images to geometric models. Vol. 26. Springer Science & Business Media, 2012.
