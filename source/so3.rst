@@ -99,14 +99,14 @@
 
 
 .. math::
-    \frac{d \mbf{e}_{i}(t)}{dt} = \skew{\mbf{\omega}(t)} \, \mbf{e}_{i}(t),\; i = 1,\dots,3
+    \frac{d \mbf{e}_{i}(t)}{dt} = \skew{\mbf{\omega}} \, \mbf{e}_{i}(t),\; i = 1,\dots,3
 
 
 という微分方程式であることがわかる．この方程式の解は
 
 
 .. math::
-    \mbf{e}_{i}(t) = \exp(\skew{\mbf{\omega}(t)} t) \, \mbf{e}_{i}(0),\; i = 1,\dots,3
+    \mbf{e}_{i}(t) = \exp(\skew{\mbf{\omega}} t) \, \mbf{e}_{i}(0),\; i = 1,\dots,3
 
 
 であることから， :math:`R(t)` は :math:`\mbf{\omega}` を用いて
@@ -114,8 +114,8 @@
 
 .. math::
     \begin{align}
-        R(t) &= \exp(\skew{\mbf{\omega}(t)} t) \, R(0)  \\
-             &= \exp(\skew{\mbf{\omega}(t)} t)
+        R(t) &= \exp(\skew{\mbf{\omega}} t) \, R(0)  \\
+             &= \exp(\skew{\mbf{\omega}} t)
     \end{align}
     :label: exponential-map
 
