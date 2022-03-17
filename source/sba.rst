@@ -501,7 +501,7 @@ LM法
     :label: error
 
 | 　LM法はGauss-Newton法と最急降下法を組み合わせた手法であると解釈することがすることができる．
-| 　:math:`J` を関数 :math:`\mathbf{f}` のヤコビ行列 :math:`\frac{\partial \mathbf{f}}{\partial \beta}` ， :math:`\D` を :math:`\B` の更新量として，Gauss-Newton法，最急降下法，LM法それぞれによる :math:`\D` の方法を示す．
+| 　:math:`J` を関数 :math:`\mathbf{f}` のヤコビ行列 :math:`\frac{\partial \mathbf{f}}{\partial \beta}` ， :math:`\D` を :math:`\B` の更新量として，Gauss-Newton法，最急降下法，LM法それぞれによる :math:`\D` を示す．
 
 .. math::
     \begin{align}
