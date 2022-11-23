@@ -64,13 +64,13 @@ Graph SLAMによる姿勢推定および地図作成
 
 .. math::
    &p(\mathbf{x}_{0:T},\; \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\; Z_{0:T}) \\
-   &= \eta \; p(Z_{T}\;|\;\mathbf{x}_{0:T},\;\mathbf{m}_{1:N},\;\mathbf{u}_{1:N},\;Z_{0:T-1})\;p(\mathbf{x}_{0:T},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1}) \\
+   &= \eta_{T} \; p(Z_{T}\;|\;\mathbf{x}_{0:T},\;\mathbf{m}_{1:N},\;\mathbf{u}_{1:N},\;Z_{0:T-1})\;p(\mathbf{x}_{0:T},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1}) \\
    :label: factored-posterior
 
-ここで :math:`\eta` は次で計算される定数である。 :math:`\eta` は観測値 :math:`\mathbf{u}_{1:T},\;Z_{0:T}` の確率分布のみで構成されているため、一度これらが観測されてしまえば :math:`\eta` は変化しない。したがって姿勢推定の問題では :math:`\eta` は定数として扱うことができる。
+ここで :math:`\eta_{T}` は次で計算される定数である。 :math:`\eta_{T}` は観測値 :math:`\mathbf{u}_{1:T},\;Z_{0:T}` の確率分布のみで構成されているため、一度これらが観測されてしまえば :math:`\eta_{T}` は変化しない。したがって姿勢推定の問題では :math:`\eta_{T}` は定数として扱うことができる。
 
 .. math::
-    \eta = \frac{p(\mathbf{u}_{1:T},\;Z_{0:T-1})}{p(\mathbf{u}_{1:T},\;Z_{0:T})}
+    \eta_{T} = \frac{p(\mathbf{u}_{1:T},\;Z_{0:T-1})}{p(\mathbf{u}_{1:T},\;Z_{0:T})}
 
 | さて、 :math:`Z_{T}` は時刻 :math:`T` に得られたランドマークの観測値だが、 :math:`Z_{T}` の分布は同時刻の姿勢 :math:`\mathbf{x}_{T}` およびそこで観測できるランドマークの座標 :math:`\mathbf{m}_{1:N}` にしか依存しない。これは時刻 :math:`i` から観測された :math:`j` 番目のランドマーク :math:`\mathbf{z}_{ij}` を :math:`\mathbf{h}(\mathbf{x}_{i},\;\mathbf{m}_{j})` でモデル化するためである。したがって、 :math:`Z_{T}` の確率分布を次のように単純化できる。 [#simplify_z_distribution]_
 
@@ -81,9 +81,9 @@ Graph SLAMによる姿勢推定および地図作成
 :eq:`factored-posterior` のもうひとつの確率についてもベイズ則を適用する。
 
 .. math::
-    &p(\mathbf{x}_{0:T},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1}) \\
-    &= p(\mathbf{x}_{T}\;|\;\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N},\;\mathbf{u}_{1:T},\;Z_{0:T-1})\;
-       p(\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1})
+    p(\mathbf{x}_{0:T},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1})
+    = p(\mathbf{x}_{T}\;|\;\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N},\;\mathbf{u}_{1:T},\;Z_{0:T-1})\;
+      p(\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1})
 
 我々は時刻 :math:`T` の姿勢 :math:`\mathbf{x}_{T}` をオドメトリ推定モデル :math:`\mathbf{g}(\mathbf{x}_{T-1}, \mathbf{u}_{T})` で予測する。したがって先ほどと同様の議論により、次のような簡略化を行うことができる。
 
@@ -100,6 +100,54 @@ Graph SLAMによる姿勢推定および地図作成
     p(\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T-1},\;Z_{0:T-1}) \\
 
 最後の変形は、 :math:`\mathbf{x}_{T-1}` までの姿勢を予測するためには時刻 :math:`T-1` までのIMU観測値があれば十分であることを表している。
+
+これらを総合して式 :eq:`factored-posterior` を再構成すると、時刻 :math:`T-1` における状態分布から時刻 :math:`T` の状態分布を得る式を導くことができる。
+
+.. math::
+   p(\mathbf{x}_{0:T},\; \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\; Z_{0:T})
+   &= \eta_{T} \; p(Z_{T}\;|\;\mathbf{x}_{0:T},\;\mathbf{m}_{1:N},\;\mathbf{u}_{1:N},\;Z_{0:T-1})\;p(\mathbf{x}_{0:T},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\;Z_{0:T-1}) \\
+   &= \eta_{T} \;
+    p(Z_{T}\;|\;\mathbf{x}_{T},\;\mathbf{m}_{1:N}) \;
+    p(\mathbf{x}_{T}\;|\;\mathbf{x}_{T-1},\mathbf{u}_{T})\;
+    p(\mathbf{x}_{0:T-1},\;\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T-1},\;Z_{0:T-1}) \\
+
+ある時刻の分布はその前の時刻の分布がわかれば導くことができる。これを繰り返していくと次のようになる。
+
+.. math::
+   p(\mathbf{x}_{0:T},\; \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\; Z_{0:T})
+   =\;
+    &\eta_{T} \;
+    p(Z_{T}\;|\;\mathbf{x}_{T},\;\mathbf{m}_{1:N}) \;
+    p(\mathbf{x}_{T}\;|\;\mathbf{x}_{T-1},\mathbf{u}_{T}) \; \\
+    & ... \\
+    &\eta_{2} \;
+    p(Z_{2}\;|\;\mathbf{x}_{2},\;\mathbf{m}_{1:N}) \;
+    p(\mathbf{x}_{2}\;|\;\mathbf{x}_{1},\mathbf{u}_{2}) \; \\
+    &\eta_{1} \;
+    p(Z_{1}\;|\;\mathbf{x}_{1},\;\mathbf{m}_{1:N}) \;
+    p(\mathbf{x}_{1}\;|\;\mathbf{x}_{0},\mathbf{u}_{1}) \;
+    p(\mathbf{x}_{0}) \\
+   =\;
+    &\eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{i=1}^{T} \left[p(Z_{i}\;|\;\mathbf{x}_{i},\;\mathbf{m}_{1:N}) \; p(\mathbf{x}_{i}\;|\;\mathbf{x}_{i-1},\mathbf{u}_{i})\right] \\
+    \text{where}\quad &\eta_{1:T} = \prod_{i=1}^{T} \eta_{i}
+
+この式では時刻 :math:`0` における姿勢の分布を :math:`p(\mathbf{x}_{0})` と置いている。一般的に :math:`\mathbf{x}_{0}` は推定するものではなく基準座標として任意に定めるものであるため、このように置くことができる。ここでは時刻 :math:`0` においてランドマークの座標は全く不明であると仮定しているが、もし何らかの方法でランドマーク座標の分布を事前に得られるのであれば、時刻 :math:`0` の状態分布は :math:`p(\mathbf{x}_{0},\; \mathbf{m}_{1:N})` のようになるであろう。
+
+一般的なSLAMの問題ではすべてのランドマークをすべての姿勢から観測できるわけではないため、この仮定を踏まえて上記の式をさらに具体的に次のように書くことができる。
+
+.. math::
+   p(\mathbf{x}_{0:T},\; \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},\; Z_{0:T})
+   &=
+    \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{i=1}^{T} \left[p(Z_{i}\;|\;\mathbf{x}_{i},\;\mathbf{m}_{1:N}) \; p(\mathbf{x}_{i}\;|\;\mathbf{x}_{i-1},\mathbf{u}_{i})\right] \\
+   &=
+    \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{k=1}^{T} \left[p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \prod_{(i,\;j)\in S_{0:T}} p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\;\mathbf{m}_{j})
+
+このようにして、 状態分布を推定する問題を、
+
+1. 各時刻におけるオドメトリ :math:`p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k}),\; k = 1,...,T` を推定する問題
+2. 各ランドマークの観測値の分布 :math:`p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\;\mathbf{m}_{j}),\;(i, j) \in S_{0:T}` を求める問題
+
+に変換することができた。
 
 | たとえば時刻 :math:`T` において3番目のランドマーク :math:`\mathbf{m}_{3}` が観測できたとしよう。このランドマークの観測値 :math:`\mathbf{z}_{T3} \in \mathbb{R}_{2}` を投影モデル :math:`\mathbf{h}(\mathbf{x}_{T},\;\mathbf{m}_{3})` を用いて分散 :math:`Q_{T3} \in \mathbb{R}^{2\times2}` の正規分布でモデル化すると、
 
