@@ -145,7 +145,7 @@ Graph SLAMによる姿勢推定および地図作成
    &=
     \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{i=1}^{T} \left[p(Z_{i}\;|\;\mathbf{x}_{i},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{i}\;|\;\mathbf{x}_{i-1},\mathbf{u}_{i})\right] \\
    &=
-    \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{k=1}^{T} \left[p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \prod_{(i,j)\in S_{0:T}} p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j})
+    \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{k=1}^{T} p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k}) \prod_{(i,j)\in S_{0:T}} p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j})
    :label: posterior-decomposition
 
 このようにして、 状態分布を推定する問題を、
@@ -155,10 +155,21 @@ Graph SLAMによる姿勢推定および地図作成
 
 に変換することができた。
 
+初期状態分布の記述
+~~~~~~~~~~~~~~~~~~
+
+初期姿勢 :math:`\mathbf{x}_{0}` はプログラム上で固定値にすればよいため分布を仮定する必要はないのだが、便宜的に次のように設定しておく。
+
+.. math::
+    p(\mathbf{x}_{0}) \propto \exp\{-\frac{1}{2}\left[\mathbf{x}_{0} - \mathbf{0}\right]^{\top} Q_{0}^{-1} \left[\mathbf{x}_{0} - \mathbf{0}\right]\} = \mathbf{x}_{0}^{\top} Q_{0}^{-1} \mathbf{x}_{0},\\
+   \text{where}\quad Q_{0}^{-1} = \operatorname{diag}(\infty,...,\infty)
+
+これによって初期姿勢が :math:`\mathbf{0}` に拘束される。
+
 運動モデルによる予測
 ~~~~~~~~~~~~~~~~~~~~
 
-式 :eq:`posterior-decomposition` において、 :math:`p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k})` は、前の時刻の姿勢 :math:`\mathbf{x}_{k-1}` および前の時刻から現在時刻までのIMU観測値 :math:`\mathbf{u}_{k}` を得たときの現在の姿勢の分布である。すなわち、前の時刻の姿勢と姿勢変化の値(あるいは入力値)に基づいた現在の姿勢の予測を表現している。なお、センサ構成によっては :math:`\mathbf{u}_{k}` をアクセルへの入力値や車輪の回転数などとすることもある。
+式 :eq:`posterior-decomposition` において、 :math:`p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k})` は、前の時刻の姿勢 :math:`\mathbf{x}_{k-1}` および前の時刻から現在時刻までのIMU観測値 :math:`\mathbf{u}_{k}` に基づいた現在の姿勢の予測を表現している。なお、センサ構成によっては :math:`\mathbf{u}_{k}` をアクセルへの入力値や車輪の回転数などとすることもある。
 
 時刻 :math:`k` の姿勢 :math:`\mathbf{x}_{k}` に対して運動モデルの予測 :math:`\mathbf{g}(\mathbf{x}_{k-1}, \mathbf{u}_{k})` の誤差が分散 :math:`Q_{k} \in \mathbb{R}^{6 \times 6}` の正規分布に従うとすると、この分布は
 
@@ -173,13 +184,43 @@ Graph SLAMによる姿勢推定および地図作成
 観測モデルによる予測
 ~~~~~~~~~~~~~~~~~~~~
 
-| たとえば時刻 :math:`i` において3番目のランドマーク :math:`\mathbf{m}_{j}` が観測できたとしよう。このランドマークの観測値 :math:`\mathbf{z}_{ij} \in \mathbb{R}_{2}` に対して投影モデル :math:`\mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})` を用いて分散 :math:`R_{ij} \in \mathbb{R}^{2\times2}` の正規分布でモデル化すると、
+式 :eq:`posterior-decomposition` において、 :math:`p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j})` は、 :math:`j` 番目のランドマーク :math:`\mathbf{m}_{j}` を時刻 :math:`i` のカメラに投影することで得られる、ランドマーク観測値の予測を表現している。ランドマークの観測値と予測とのずれが分散 :math:`R_{ij} \in \mathbb{R}^{2 \times 2}` の正規分布に従うとすると、このずれの分布は
 
 .. math::
     p(\mathbf{z}_{ij} \;|\; \mathbf{x}_{i}, \mathbf{m}_{j}) = \frac{1}{\sqrt{(2\pi)^{2}\det(R_{ij})}}\exp\{-\frac{1}{2}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]\}
 
-となる。この分布は
+と書くことができる。
 
+対数尤度関数
+~~~~~~~~~~~~
+
+推定したい状態は確率分布の頂点の値である。
+
+確率分布が最大値をとるということは、そこに真の状態および真のランドマーク位置がある可能性が高いということである。
+
+.. math::
+    \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+
+式 :eq:`posterior-decomposition` は正規分布の積で表される。したがってその対数を計算すると指数部分が外れ、最大確率をとる状態を計算しやすくなる。
+
+.. math::
+   &\log p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+   &= \text{constant} + \log p(\mathbf{x}_{0})\; + \sum_{k=1}^{T} \log p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k}) + \sum_{(i,j)\in S_{0:T}} \log p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j}) \\
+   &= \text{constant} - \frac{1}{2}\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
+   &- \frac{1}{2} \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \\
+   &- \frac{1}{2} \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]
+
+対数関数は単調増加関数なので、もとの確率分布を最大化する状態と、対数関数をかけたあとの確率分布を最大化状態する状態は等しい。
+
+.. math::
+    &\underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; \log p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} - \left\{\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
+    + \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]
+    + \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]\right\} \\
+    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\min} \left\{\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
+    + \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]
+    + \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]\right\}
 
 .. math::
    \mathbf{r} =
