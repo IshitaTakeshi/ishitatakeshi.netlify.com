@@ -86,14 +86,14 @@ Graph SLAMによる姿勢推定および地図作成
 :eq:`factored-posterior` のもうひとつの確率についてもベイズ則を適用する。
 
 .. math::
-    p(\mathbf{x}_{0:T},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1})
-    = p(\mathbf{x}_{T}\;|\;\mathbf{x}_{0:T-1},\mathbf{m}_{1:N},\mathbf{u}_{1:T},Z_{0:T-1})\;
+    &p(\mathbf{x}_{0:T},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1}) \\
+    &= p(\mathbf{x}_{T}\;|\;\mathbf{x}_{0:T-1},\mathbf{m}_{1:N},\mathbf{u}_{1:T},Z_{0:T-1})\;
       p(\mathbf{x}_{0:T-1},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1})
 
 我々は時刻 :math:`T` の姿勢 :math:`\mathbf{x}_{T}` をオドメトリ推定モデル :math:`\mathbf{g}(\mathbf{x}_{T-1}, \mathbf{u}_{T})` で予測する。したがって先ほどと同様の議論により、次のような簡略化を行うことができる。
 
 .. math::
-    p(\mathbf{x}_{0:T},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1})
+    &p(\mathbf{x}_{0:T},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1}) \\
     &=
     p(\mathbf{x}_{T}\;|\;\mathbf{x}_{0:T-1},\mathbf{m}_{1:N},\mathbf{u}_{1:T},Z_{0:T-1})\;
     p(\mathbf{x}_{0:T-1},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1}) \\
@@ -109,7 +109,7 @@ Graph SLAMによる姿勢推定および地図作成
 これらを総合して式 :eq:`factored-posterior` を再構成すると、時刻 :math:`T-1` における状態分布から時刻 :math:`T` の状態分布を得る式を導くことができる。
 
 .. math::
-   p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+   &p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
    &= \eta_{T} \; p(Z_{T}\;|\;\mathbf{x}_{0:T},\mathbf{m}_{1:N},\mathbf{u}_{1:N},Z_{0:T-1})\;p(\mathbf{x}_{0:T},\mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T},Z_{0:T-1}) \\
    &= \eta_{T} \;
     p(Z_{T}\;|\;\mathbf{x}_{T},\mathbf{m}_{1:N}) \;
@@ -119,29 +119,24 @@ Graph SLAMによる姿勢推定および地図作成
 ある時刻の分布はその前の時刻の分布がわかれば導くことができる。これを繰り返していくと次のようになる。
 
 .. math::
+   \begin{align}
    p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
-   =\;
-    &\eta_{T} \;
-    p(Z_{T}\;|\;\mathbf{x}_{T},\mathbf{m}_{1:N}) \;
-    p(\mathbf{x}_{T}\;|\;\mathbf{x}_{T-1},\mathbf{u}_{T}) \; \\
+   = \;
+    & \eta_{T} \; p(Z_{T}\;|\;\mathbf{x}_{T},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{T}\;|\;\mathbf{x}_{T-1},\mathbf{u}_{T}) \; \\
     & ... \\
-    &\eta_{2} \;
-    p(Z_{2}\;|\;\mathbf{x}_{2},\mathbf{m}_{1:N}) \;
-    p(\mathbf{x}_{2}\;|\;\mathbf{x}_{1},\mathbf{u}_{2}) \; \\
-    &\eta_{1} \;
-    p(Z_{1}\;|\;\mathbf{x}_{1},\mathbf{m}_{1:N}) \;
-    p(\mathbf{x}_{1}\;|\;\mathbf{x}_{0},\mathbf{u}_{1}) \;
-    p(\mathbf{x}_{0}) \\
+    & \eta_{2} \; p(Z_{2}\;|\;\mathbf{x}_{2},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{2}\;|\;\mathbf{x}_{1},\mathbf{u}_{2}) \; \\
+    & \eta_{1} \; p(Z_{1}\;|\;\mathbf{x}_{1},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{1}\;|\;\mathbf{x}_{0},\mathbf{u}_{1}) \; p(\mathbf{x}_{0}) \\
    =\;
     &\eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{i=1}^{T} \left[p(Z_{i}\;|\;\mathbf{x}_{i},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{i}\;|\;\mathbf{x}_{i-1},\mathbf{u}_{i})\right] \\
-    \text{where}\quad &\eta_{1:T} = \prod_{i=1}^{T} \eta_{i}
+    &\text{where}\quad \eta_{1:T} = \prod_{i=1}^{T} \eta_{i}
+   \end{align}
 
 この式では時刻 :math:`0` における姿勢の分布を :math:`p(\mathbf{x}_{0})` と置いている。一般的に :math:`\mathbf{x}_{0}` は推定するものではなく基準座標として任意に定めるものであるため、このように置くことができる。ここでは時刻 :math:`0` においてランドマークの座標は全く不明であると仮定しているが、もし何らかの方法でランドマーク座標の分布を事前に得られるのであれば、時刻 :math:`0` の状態分布は :math:`p(\mathbf{x}_{0}, \mathbf{m}_{1:N})` のようになるであろう。
 
 一般的なSLAMの問題ではすべてのランドマークをすべての姿勢から観測できるわけではないため、この仮定を踏まえて上記の式をさらに具体的に次のように書くことができる。
 
 .. math::
-   p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+   &p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
    &=
     \eta_{1:T} \; p(\mathbf{x}_{0})\; \prod_{i=1}^{T} \left[p(Z_{i}\;|\;\mathbf{x}_{i},\mathbf{m}_{1:N}) \; p(\mathbf{x}_{i}\;|\;\mathbf{x}_{i-1},\mathbf{u}_{i})\right] \\
    &=
@@ -205,22 +200,34 @@ Graph SLAMによる姿勢推定および地図作成
 
 .. math::
    &\log p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
-   &= \text{constant} + \log p(\mathbf{x}_{0})\; + \sum_{k=1}^{T} \log p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k}) + \sum_{(i,j)\in S_{0:T}} \log p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j}) \\
-   &= \text{constant} - \frac{1}{2}\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
+   =\;
+   &\text{constant}
+   + \log p(\mathbf{x}_{0})
+   + \sum_{k=1}^{T} \log p(\mathbf{x}_{k}\;|\;\mathbf{x}_{k-1},\mathbf{u}_{k})
+   + \sum_{(i,j)\in S_{0:T}} \log p(\mathbf{z}_{ij}\;|\;\mathbf{x}_{i},\mathbf{m}_{j}) \\
+   =\;
+   &\text{constant} \\
+   &- \frac{1}{2}\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
    &- \frac{1}{2} \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \\
    &- \frac{1}{2} \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]
 
 対数関数は単調増加関数なので、もとの確率分布を最大化する状態と、対数関数をかけたあとの確率分布を最大化状態する状態は等しい。
 
 .. math::
-    &\underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+    \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
     &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; \log p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
-    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} - \left\{\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
-    + \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]
-    + \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]\right\} \\
-    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\min} \left\{\mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
-    + \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]
-    + \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]\right\}
+
+結果としてこれは次の最小化問題に帰結する。
+
+.. math::
+    \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; -E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
+    &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\min}\; E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}), \\
+    \\
+    E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+    &= \mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
+    &+ \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \\
+    &+ \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right], \\
 
 .. math::
    \mathbf{r} =
