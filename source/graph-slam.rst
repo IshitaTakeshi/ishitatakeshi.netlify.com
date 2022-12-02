@@ -186,6 +186,9 @@ Graph SLAMによる姿勢推定および地図作成
 
 と書くことができる。
 
+なお、共分散 :math:`Q_{k}` および :math:`R_{ij}` はハイパーパラメータとして与えることもできるが、統計的に計算することも可能である。
+
+
 対数尤度関数
 ~~~~~~~~~~~~
 
@@ -211,7 +214,7 @@ Graph SLAMによる姿勢推定および地図作成
    &- \frac{1}{2} \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \\
    &- \frac{1}{2} \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]
 
-対数関数は単調増加関数なので、もとの確率分布を最大化する状態と、対数関数をかけたあとの確率分布を最大化状態する状態は等しい。
+対数関数は単調増加関数なので、もとの確率分布を最大化する状態と、対数関数を適用したあとの確率分布を最大化する状態は等しい。
 
 .. math::
     \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
@@ -227,7 +230,145 @@ Graph SLAMによる姿勢推定および地図作成
     E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
     &= \mathbf{x}_{0}^{\top}Q_{0}^{-1}\mathbf{x}_{0} \\
     &+ \sum_{k=1}^{T} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right]^{\top} Q_{k}^{-1} \left[\mathbf{x}_{k} - \mathbf{g}(\mathbf{x}_{k-1},\mathbf{u}_{k})\right] \\
-    &+ \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right], \\
+    &+ \sum_{(i,j)\in S_{0:T}} \left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right]^{\top}R_{ij}^{-1}\left[\mathbf{z}_{ij} - \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})\right] \\
+   :label: error-function
+
+誤差関数の最小化
+----------------
+
+さて、式 :eq:`error-function` に示す誤差関数は残差 :math:`\mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})` および共分散行列 :math:`\Sigma_{T}` を用いて次のように表現することができる。
+
+.. math::
+   \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}) =
+   \begin{bmatrix}
+   \mathbf{x}_{0} \\
+   \mathbf{x}_{1} - \mathbf{g}(\mathbf{x}_{0}, \mathbf{u}_{1}) \\
+   \vdots \\
+   \mathbf{x}_{T} - \mathbf{g}(\mathbf{x}_{T-1}, \mathbf{u}_{T}) \\
+   \mathbf{z}_{01} - \mathbf{h}(\mathbf{x}_{0},\mathbf{m}_{1}) \\
+   \vdots \\
+   \mathbf{z}_{TN} - \mathbf{h}(\mathbf{x}_{T},\mathbf{m}_{N})
+   \end{bmatrix}
+
+.. math::
+   \Sigma_{T} =
+   \begin{bmatrix}
+   Q_{0} \\
+   & Q_{1} \\
+   & & \ddots \\
+   & & & Q_{T} \\
+   & & & & R_{00} \\
+   & & & & & \ddots \\
+   & & & & & & R_{TN}
+   \end{bmatrix}
+
+.. math::
+   E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+   = \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})
+
+この誤差関数はGauss-Newton法によって最小化できる。
+
+誤差関数の微分
+~~~~~~~~~~~~~~
+
+:math:`\mathbf{y}_{T} = \left[\mathbf{x}_{0:T}^{\top},\; \mathbf{m}_{1:N}^{\top}\right]^{\top}` として誤差関数 :math:`E_{T}` を微分すると次のようになる。
+
+.. math::
+    J = \frac{\partial E_{T}}{\partial \mathbf{y}_{T}} =
+    \begin{bmatrix}
+     I          &          &             &             &             &             &             \\
+    -G_{0}      & \ddots   &             &             &             &             &             \\
+                & \ddots   & I           &             &             &             &             \\
+                &          & -G_{T-1}    & I           &             &             &             \\
+    -H^{x}_{01} &          &             &             & -H^{m}_{01} &             &             \\
+                & \ddots   &             &             &             & \ddots      &             \\
+                &          & \ddots      &             &             & \ddots      &             \\
+                &          &             & -H^{x}_{TN} &             &             & -H^{m}_{TN} \\
+    \end{bmatrix}
+
+ここで :math:`G_{i},\; H^{x}_{ij},\; H^{m}_{ij}` は運動モデルおよび観測モデルのJacobianを表している。
+
+.. math::
+    G_{i} = \frac{\partial \mathbf{g}(\mathbf{x}_{i}, \mathbf{u}_{i+1})}{\partial \mathbf{x}_{i}},\;
+    H^{x}_{ij} = \frac{\partial \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})}{\partial \mathbf{x}_{i}},\;
+    H^{m}_{ij} = \frac{\partial \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})}{\partial \mathbf{m}_{j}}
+
+
+運動モデルを異なる時刻の姿勢で微分すると :math:`0` になる。
+
+.. math::
+    \frac{\partial \mathbf{g}(\mathbf{x}_{i}, \mathbf{u}_{i+1})}{\partial \mathbf{x}_{k}} &= 0 \quad \text{if} \; i \neq k  \\
+
+
+観測モデルも異なる時刻の姿勢もしくは異なるランドマークで微分すると :math:`0` になる。
+
+.. math::
+    \frac{\partial \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})}{\partial \mathbf{x}_{k}} &= 0    \quad \text{if} \; i \neq k  \\
+    \frac{\partial \mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})}{\partial \mathbf{m}_{j}} &= 0    \quad \text{if} \; j \neq k  \\
+
+したがって行列 :math:`J` は非常にスパースになる。
+
+
+具体例
+~~~~~~
+
+次の例を用いてJacobianの形をより具体的に見てみよう。
+
+| 姿勢を :math:`\mathbf{x}_{0:4} = \{\mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},\mathbf{x}_{3}\}` 、 ランドマークを :math:`\mathbf{m}_{1:2} = \{\mathbf{m}_{1},\mathbf{m}_{2}\}` とする。
+| また、姿勢 :math:`\{\mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2}\}` からランドマーク :math:`\mathbf{m}_{0}` を、姿勢 :math:`\{\mathbf{x}_{1},\mathbf{x}_{3}\}` からランドマーク :math:`\mathbf{m}_{1}` を観測できるものとする。
+
+姿勢とランドマークの関係を図で表すとこのようになる。
+
+.. image:: images/example-slam-graph.svg
+   :width: 600
+
+|
+
+IMU観測値 :math:`\mathbf{u}_{1:4}` およびランドマークの観測値 :math:`Z_{1:4}` はそれぞれ次のようになる。
+
+.. math::
+    \mathbf{u}_{1:4} &= \{\mathbf{u}_{1},\mathbf{u}_{2},\mathbf{u}_{3}\}  \\
+    Z_{1:4} &= \{\mathbf{z}_{11},\mathbf{z}_{21},\mathbf{z}_{22},\mathbf{z}_{32},\mathbf{z}_{42}\}
+
+これらをもとに誤差関数を構成しよう。
+
+.. math::
+   \mathbf{r}_{4} =
+   \begin{bmatrix}
+        \mathbf{x}_{0} - \mathbf{0} \\
+        \mathbf{x}_{1} - \mathbf{g}(\mathbf{x}_{0}, \mathbf{u}_{1}) \\
+        \mathbf{x}_{2} - \mathbf{g}(\mathbf{x}_{1}, \mathbf{u}_{2}) \\
+        \mathbf{x}_{3} - \mathbf{g}(\mathbf{x}_{2}, \mathbf{u}_{3}) \\
+        \mathbf{z}_{01} - \mathbf{h}(\mathbf{x}_{0}, \mathbf{m}_{1}) \\
+        \mathbf{z}_{11} - \mathbf{h}(\mathbf{x}_{1}, \mathbf{m}_{1}) \\
+        \mathbf{z}_{21} - \mathbf{h}(\mathbf{x}_{2}, \mathbf{m}_{1}) \\
+        \mathbf{z}_{12} - \mathbf{h}(\mathbf{x}_{1}, \mathbf{m}_{2}) \\
+        \mathbf{z}_{32} - \mathbf{h}(\mathbf{x}_{3}, \mathbf{m}_{2}) \\
+    \end{bmatrix} \\
+
+.. math::
+   E_{4}(\mathbf{x}_{0:3}, \mathbf{m}_{1:2} \;|\; \mathbf{u}_{1:4}, Z_{1:4})
+   = \mathbf{r}_{4}(\mathbf{x}_{0:3}, \mathbf{m}_{1:2})^{\top} \Sigma_{4}^{-1} \mathbf{r}_{4}(\mathbf{x}_{0:3}, \mathbf{m}_{1:2})
+
+
+誤差関数の微分は次のようになる。
+
+
+
+.. math::
+   J_{4} =
+   \begin{bmatrix}
+      I         &             &             &             &             &             \\
+     -G_{0}     & I           &             &             &             &             \\
+                & -G_{1}      & I           &             &             &             \\
+                &             & -G_{2}      & I           &             &             \\
+    -H^{x}_{01} &             &             &             & -H^{m}_{01} &             \\
+                & -H^{x}_{11} &             &             & -H^{m}_{11} &             \\
+                &             & -H^{x}_{21} &             & -H^{m}_{21} &             \\
+                & -H^{x}_{12} &             &             &             & -H^{m}_{12} \\
+                &             &             & -H^{x}_{32} &             & -H^{m}_{32} \\
+   \end{bmatrix}
+
 
 .. math::
    \mathbf{r} =
@@ -244,8 +385,9 @@ Graph SLAMによる姿勢推定および地図作成
         \mathbf{z}_{42} - \mathbf{h}(\mathbf{x}_{4}, \mathbf{m}_{2}) \\
     \end{bmatrix} \\
 
+
 .. math::
-    \mathbf{x} = \left[
+    \mathbf{y} = \left[
         \mathbf{x}_{0}^{\top}\quad
         \mathbf{x}_{1}^{\top}\quad
         \mathbf{x}_{2}^{\top}\quad
