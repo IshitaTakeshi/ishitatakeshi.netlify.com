@@ -220,7 +220,7 @@ Graph SLAMによる姿勢推定および地図作成
     \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
     &= \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; \log p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) \\
 
-結果としてこれは次の最小化問題に帰結する。
+結果として、最大確率をとる状態を求める問題はは次の最小化問題に帰結する。
 
 .. math::
     \underset{\mathbf{x}_{0:T},\,\mathbf{m}_{0:N}}{\arg\max} \; p(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
@@ -236,10 +236,10 @@ Graph SLAMによる姿勢推定および地図作成
 誤差関数の最小化
 ----------------
 
-さて、式 :eq:`error-function` に示す誤差関数は残差 :math:`\mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})` および共分散行列 :math:`\Sigma_{T}` を用いて次のように表現することができる。
+さて、式 :eq:`error-function` に示す誤差関数は残差 :math:`\mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})` および共分散行列 :math:`\Sigma_{T}` を用いて次のように表現することができる。
 
 .. math::
-   \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}) =
+   \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T}) =
    \begin{bmatrix}
    \mathbf{x}_{0} \\
    \mathbf{x}_{1} - \mathbf{g}(\mathbf{x}_{0}, \mathbf{u}_{1}) \\
@@ -264,14 +264,19 @@ Graph SLAMによる姿勢推定および地図作成
 
 .. math::
    E_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
-   = \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N})
+   = \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{x}_{0:T}, \mathbf{m}_{1:N}\;|\;\mathbf{u}_{1:T}, Z_{0:T})
+
+このままでは表記が煩雑なので状態を :math:`\mathbf{y}_{T} = \left[\mathbf{x}_{0:T}^{\top},\; \mathbf{m}_{1:N}^{\top}\right]^{\top}` とおいて次のように書くことにしよう。
+
+.. math::
+   E_{T}(\mathbf{y}_{T}) = \mathbf{r}_{T}(\mathbf{y}_{T})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T})
 
 この誤差関数はGauss-Newton法によって最小化できる。
 
 誤差関数の微分
 ~~~~~~~~~~~~~~
 
-:math:`\mathbf{y}_{T} = \left[\mathbf{x}_{0:T}^{\top},\; \mathbf{m}_{1:N}^{\top}\right]^{\top}` として誤差関数 :math:`E_{T}` を微分すると次のようになる。
+誤差関数 :math:`E_{T}` を状態 :math:`\mathbf{y}_{T}` で微分すると次のようになる。
 
 .. math::
     J = \frac{\partial E_{T}}{\partial \mathbf{y}_{T}} =
@@ -333,7 +338,7 @@ IMU観測値 :math:`\mathbf{u}_{1:4}` およびランドマークの観測値 :m
 これらをもとに誤差関数を構成しよう。
 
 .. math::
-   \mathbf{r}_{4} =
+   \mathbf{r}_{4}(\mathbf{y}_{4}) =
    \begin{bmatrix}
         \mathbf{x}_{0} - \mathbf{0} \\
         \mathbf{x}_{1} - \mathbf{g}(\mathbf{x}_{0}, \mathbf{u}_{1}) \\
@@ -351,12 +356,10 @@ IMU観測値 :math:`\mathbf{u}_{1:4}` およびランドマークの観測値 :m
    = \mathbf{r}_{4}(\mathbf{x}_{0:3}, \mathbf{m}_{1:2})^{\top} \Sigma_{4}^{-1} \mathbf{r}_{4}(\mathbf{x}_{0:3}, \mathbf{m}_{1:2})
 
 
-誤差関数の微分は次のようになる。
-
-
+状態を :math:`\mathbf{y}_{4} = \left[\mathbf{x}_{0},\mathbf{x}_{1},\mathbf{x}_{2},\mathbf{x}_{3},\mathbf{m}_{1},\mathbf{m}_{2}\right]` とすると誤差関数の微分は次のようになる。
 
 .. math::
-   J_{4} =
+   \frac{\partial E_{4}}{\partial \mathbf{y}_{4}} = J_{4} =
    \begin{bmatrix}
       I         &             &             &             &             &             \\
      -G_{0}     & I           &             &             &             &             \\
@@ -369,22 +372,53 @@ IMU観測値 :math:`\mathbf{u}_{1:4}` およびランドマークの観測値 :m
                 &             &             & -H^{x}_{32} &             & -H^{m}_{32} \\
    \end{bmatrix}
 
+Gauss-Newton法による誤差最小化
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+| 具体的な最小化の式を見る前に、Gauss-Newton法について解説しよう。Gauss-Newton法は最小化問題の近似式を繰り返し最小化することで解を得る手法である。
+| ある値で誤差関数を二次近似し、その最小値を求める。今度はその最小値を用いて誤差関数を二次近似し、得られた近似式の最小値を求める。これを繰り返すことで誤差関数を最小化する状態を求める。
+
+誤差関数 :math:`E_{T}(\mathbf{y}_{T}) = \mathbf{r}_{T}(\mathbf{y}_{T})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T})` を最小化する問題を考えよう。
+
+Gauss-Newton法ではまず初期値 :math:`\mathbf{y}_{T}^{(0)}` を定め、そのまわりで誤差関数 :math:`E_{T}` を最小化する状態 :math:`\Delta \mathbf{y}_{T}^{(0)}` を求める。
 
 .. math::
-   \mathbf{r} =
-   \begin{bmatrix}
-        \mathbf{x}_{0} - \mathbf{0} \\
-        \mathbf{x}_{1} - \mathbf{g}(\mathbf{x}_{0}, \mathbf{u}_{0}) \\
-        \mathbf{x}_{2} - \mathbf{g}(\mathbf{x}_{1}, \mathbf{u}_{1}) \\
-        \mathbf{x}_{3} - \mathbf{g}(\mathbf{x}_{2}, \mathbf{u}_{2}) \\
-        \mathbf{x}_{4} - \mathbf{g}(\mathbf{x}_{3}, \mathbf{u}_{3}) \\
-        \mathbf{z}_{11} - \mathbf{h}(\mathbf{x}_{1}, \mathbf{m}_{1}) \\
-        \mathbf{z}_{21} - \mathbf{h}(\mathbf{x}_{2}, \mathbf{m}_{1}) \\
-        \mathbf{z}_{22} - \mathbf{h}(\mathbf{x}_{2}, \mathbf{m}_{2}) \\
-        \mathbf{z}_{32} - \mathbf{h}(\mathbf{x}_{3}, \mathbf{m}_{2}) \\
-        \mathbf{z}_{42} - \mathbf{h}(\mathbf{x}_{4}, \mathbf{m}_{2}) \\
-    \end{bmatrix} \\
+   E_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)}) =
+   \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)})
 
+| この問題は解析的に解けないため、誤差関数を近似し、それを最小化する状態 :math:`\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)}` を求める。
+| まずは残差 :math:`\mathbf{r}_{T}` を近似する。
+
+.. math::
+   \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)})
+   &\approx \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)}) + \left. \frac{\partial \mathbf{r}_{T}}{\partial \mathbf{y}_{T}}\right|_{\mathbf{y}_{T}^{(0)}} \Delta \mathbf{y}_{T}^{(0)}\\
+   &= \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)}) + J_{T}^{(0)} \Delta \mathbf{y}_{T}^{(0)},
+   \quad J_{T}^{(0)} = \left. \frac{\partial \mathbf{r}_{T}}{\partial \mathbf{y}_{T}}\right|_{\mathbf{y}_{T}^{(0)}}
+
+これを用いて誤差関数を近似する。
+
+.. math::
+   &E_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)}) \\
+   &= \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)} + \Delta \mathbf{y}_{T}^{(0)}) \\
+   &\approx
+   \left[ \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)}) + J_{T}^{(0)} \Delta \mathbf{y}_{T}^{(0)} \right]^{\top}
+   \Sigma_{T}^{-1}
+   \left[ \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)}) + J_{T}^{(0)} \Delta \mathbf{y}_{T}^{(0)} \right] \\
+   &= \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)})^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)})
+   + 2 \Delta {\mathbf{y}_{T}^{(0)}}^{\top} {J_{T}^{(0)}}^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)})
+   + \Delta {\mathbf{y}_{T}^{(0)}}^{\top} {J_{T}^{(0)}}^{\top} \Sigma_{T}^{-1} J_{T}^{(0)} \Delta \mathbf{y}_{T}^{(0)}
+
+この近似誤差を最小化する状態ステップ幅 :math:`\mathbf{y}_{T}^{(0)}` を求めるには、近似誤差を微分して :math:`\mathbf{0}` とおけばよい。
+
+.. math::
+   \frac{\partial E_{T}}{\partial \Delta \mathbf{y}_{T}^{(0)}}
+   = 2 {J_{T}^{(0)}}^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)}) + 2 {J_{T}^{(0)}}^{\top} \Sigma_{T}^{-1} J_{T}^{(0)} \Delta \mathbf{y}_{T}^{(0)}
+   = \mathbf{0}
+
+したがって、近似誤差を最小化するステップ幅 :math:`\Delta \mathbf{y}_{T}^{(0)}` は
+
+.. math::
+   \Delta \mathbf{y}_{T}^{(0)} = \left({J_{T}^{(0)}}^{-1} \Sigma_{T}^{-1} J_{T}^{(0)}\right)^{\top} {J_{T}^{(0)}}^{\top} \Sigma_{T}^{-1} \mathbf{r}_{T}(\mathbf{y}_{T}^{(0)})
 
 .. math::
     \mathbf{y} = \left[
@@ -396,43 +430,6 @@ IMU観測値 :math:`\mathbf{u}_{1:4}` およびランドマークの観測値 :m
         \mathbf{m}_{1}^{\top}\quad
         \mathbf{m}_{2}^{\top}\quad
     \right]^{\top}
-
-
-.. math::
-    J = \begin{bmatrix}
-     I     &          &          &          &          &          &          \\
-    -G_{0} & I        &          &          &          &          &          \\
-           & -G_{1}   & I        &          &          &          &          \\
-           &          & -G_{2}   & I        &          &          &          \\
-           &          &          & -G_{3}   & I        &          &          \\
-           & -H_{x11} &          &          &          & -H_{m11} &          \\
-           &          & -H_{x21} &          &          & -H_{m21} &          \\
-           &          & -H_{x22} &          &          &          & -H_{m22} \\
-           &          &          & -H_{x32} &          &          & -H_{m32} \\
-           &          &          &          & -H_{x42} &          & -H_{m42} \\
-    \end{bmatrix}
-
-
-.. math::
-    J^{\top} J =
-   \begin{bmatrix}
-    D_{0}  & -G_{0}                &                       &                       &                        &                       &                       \\
-    -G_{0} & D_{1}                 &                       &                       &                        & H_{x11}^{\top}H_{m11} &                       \\
-           & -G_{1}                & D_{2}                 & -G_{2}                &                        & H_{x21}^{\top}H_{m21} & H_{x22}^{\top}H_{m22} \\
-           &                       & -G_{2}                & D_{3}                 & -G_{3}                 &                       & H_{x32}^{\top}H_{m32} \\
-           &                       &                       & -G_{3}                & D_{4}                  &                       & H_{x42}^{\top}H_{m42} \\
-           & H_{m11}^{\top}H_{x11} & H_{m21}^{\top}H_{x21} &                       &                        & D_{5}                 &                       \\
-           &                       & H_{m22}^{\top}H_{x22} & H_{m22}^{\top}H_{x22} &  H_{m42}^{\top}H_{x42} &                       & D_{6}                 \\
-   \end{bmatrix}
-
-.. math::
-    D_{0} &= I - 2G_{0} + G_{0}^{\top}G_{0}  \\
-    D_{1} &= I - 2G_{1} + G_{1}^{\top}G_{1} + H_{x11}^{\top}H_{x11}  \\
-    D_{2} &= I - 2G_{2} + G_{2}^{\top}G_{2} + H_{x21}^{\top}H_{x21} + H_{x22}^{\top}H_{x22}  \\
-    D_{3} &= I - 2G_{3} + G_{3}^{\top}G_{3} + H_{x32}^{\top}H_{x32} \\
-    D_{4} &= I + H_{x42}^{\top}H_{x42} \\
-    D_{5} &= H_{m11}^{\top}H_{m11} + H_{m21}^{\top}H_{m21} \\
-    D_{6} &= H_{m22}^{\top}H_{m22} + H_{m32}^{\top}H_{m32} + H_{m42}^{\top}H_{m42} \\
 
 
 .. [#sfm] Structure from Motion と呼ばれる
