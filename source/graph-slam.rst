@@ -77,7 +77,7 @@ Graph SLAMによる姿勢推定および地図作成
 .. math::
     \eta_{T} = \frac{p(\mathbf{u}_{1:T},Z_{0:T-1})}{p(\mathbf{u}_{1:T},Z_{0:T})}
 
-| さて、 :math:`Z_{T}` は時刻 :math:`T` に得られたランドマークの観測値だが、 :math:`Z_{T}` の分布は同時刻の姿勢 :math:`\mathbf{x}_{T}` およびそこで観測できるランドマークの座標 :math:`\mathbf{m}_{1:N}` にしか依存しない。これは時刻 :math:`i` から観測された :math:`j` 番目のランドマーク :math:`\mathbf{z}_{ij}` を :math:`\mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})` でモデル化するためである。したがって、 :math:`Z_{T}` の確率分布を次のように単純化できる。 [#simplify_z_distribution]_
+| さて、 :math:`Z_{T}` は時刻 :math:`T` に得られたランドマークの観測値だが、 :math:`Z_{T}` の分布は同時刻の姿勢 :math:`\mathbf{x}_{T}` およびそこで観測できるランドマークの座標 :math:`\mathbf{m}_{1:N}` にしか依存しない。これは時刻 :math:`i` から観測された :math:`j` 番目のランドマーク :math:`\mathbf{z}_{ij}` を :math:`\mathbf{h}(\mathbf{x}_{i},\mathbf{m}_{j})` でモデル化するためである。したがって、 :math:`Z_{T}` の確率分布を次のように単純化できる [#simplify_z_distribution]_ 。
 
 .. math::
     p(Z_{T}\;|\;\mathbf{x}_{0:T},\mathbf{m}_{1:N},\mathbf{u}_{1:N},Z_{0:T-1}) = p(Z_{T}\;|\;\mathbf{x}_{T},\mathbf{m}_{1:N})
@@ -431,7 +431,8 @@ Gauss-Newton法ではまず初期値 :math:`\mathbf{y}_{T}^{(0)}` を定め、�
 計算量の低減
 ~~~~~~~~~~~~
 
-SLAMは一般的に低消費電力あるいは計算量が限られたデバイスで動作することが求められるため、高速な状態推定が必要とされる。ではGauss-Newton法において計算量のボトルネックとなるのはどの部分だろうか。それは式 :eq:`gauss-newton-update` のステップ幅更新におけるヘッシアンの逆行列 :math:`(J_{T}^{\top} \Sigma_{T}^{-1} J_{T})^{-1}` の計算である。 [#simplify_step_times]_
+SLAMは一般的に低消費電力あるいは計算量が限られたデバイスで動作することが求められるため、高速な状態推定が必要とされる。ではGauss-Newton法において計算量のボトルネックとなるのはどの部分だろうか。それは式 :eq:`gauss-newton-update` のステップ幅更新におけるヘッシアンの逆行列 :math:`(J_{T}^{\top} \Sigma_{T}^{-1} J_{T})^{-1}` の計算である [#simplify_step_times]_ 。
+
 式 :eq:`jacobian-j4` を例としてヘッシアンを計算してみよう。
 
 ..
