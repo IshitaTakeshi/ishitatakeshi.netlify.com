@@ -5,6 +5,11 @@
 職歴
 ====
 
+| `Tier IV, Inc. <https://tier4.jp/>`__
+| 車両の自己位置推定の研究開発
+| 2020年7月 - 現在
+
+
 | `未踏プロジェクト <https://www.ipa.go.jp/jinzai/mitou/2019/gaiyou_s-2.html>`__
 | Visual SLAMフレームワークの開発
 | 2019年4月 - 2020年3月
