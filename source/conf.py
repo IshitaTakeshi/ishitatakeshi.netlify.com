@@ -19,7 +19,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Ishita\'s homepage'
+project = 'SLAM'
 copyright = '2019, Takeshi Ishita'
 author = 'Takeshi Ishita'
 
@@ -146,7 +146,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    (master_doc, 'ishitashomepage', 'Ishita\'s homepage',
+    (master_doc, 'ishitashomepage', 'SLAM',
      [author], 1)
 ]
 
@@ -157,7 +157,7 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    (master_doc, 'Ishitashomepage', 'Ishita\'s homepage',
+    (master_doc, 'Ishitashomepage', 'SLAM',
      author, 'Ishitashomepage', 'One line description of project.',
      'Miscellaneous'),
 ]
